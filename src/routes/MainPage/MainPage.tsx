@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHome, faChartBar, faBell, faCog, faUpload, faQuestionCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'; // Import FontAwesome icons
 import { faFootballBall, faBasketballBall, faBaseballBall } from '@fortawesome/free-solid-svg-icons'; // Import sports icons
 
-const SidebarContainer = styled.div`
+const SidebarContainer = styled.div<{ collapsed: boolean }>`
     width: ${({ collapsed }) => (collapsed ? '80px' : '297px')};
     height: 100vh;
     background: black;
@@ -73,7 +73,7 @@ const UserAvatar = styled.img`
     border: 3px solid #CA6D00;
 `;
 
-const CrowdImage = styled.img<{ collapsed: boolean }>` // Define collapsed prop in the styled component
+const CrowdImage = styled.img<{ collapsed: boolean }>`
     position: fixed;
     top: 0;
     ${({ collapsed }) => (collapsed ? 'left: 80px;' : 'left: 297px;')}
@@ -83,7 +83,7 @@ const CrowdImage = styled.img<{ collapsed: boolean }>` // Define collapsed prop 
     transition: left 0.3s ease;
 `;
 
-export const RightSidebarContainer = styled.div`
+const RightSidebarContainer = styled.div`
     width: 80px;
     height: 100vh;
     background: darkgreen; /* Match the background color of the left sidebar */
@@ -103,8 +103,36 @@ const SportsIconsContainer = styled.div`
     gap: 20px;
 `;
 
+const ImageCarousel = styled.img`
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: opacity 0.5s ease;
+`;
+
+const CarouselContainer = styled.div`
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+`;
+
 function MainPage(): JSX.Element {
     const [collapsed, setCollapsed] = useState<boolean>(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+    const images = ['crowd.png', 'crowd2.jpg', 'crowd3.jpg'];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [images.length]);
 
     const toggleSidebar = (): void => {
         setCollapsed(!collapsed);
@@ -156,7 +184,7 @@ function MainPage(): JSX.Element {
                     </LogoutButton>
                 </LogoutContainer>
             </SidebarContainer>
-            <CrowdImage src="crowd.png" alt="Crowd Image" collapsed={collapsed} />
+            <CrowdImage src={images[currentImageIndex]} alt="Crowd Image" collapsed={collapsed} />
             <RightSidebarContainer>
                 <SportsIconsContainer>
                     <FontAwesomeIcon icon={faFootballBall} size="2x" style={{ color: 'white' }} />
