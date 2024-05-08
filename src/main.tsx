@@ -1,8 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Root from './routes/Root/Root.tsx';
-import MainPage from './routes/MainPage/MainPage.tsx'; // Imported MainPage component
+import Root from './routes/Root/Root';
+import MainPage from './routes/MainPage/MainPage'; // Corrected import for MainPage component
 
 const router = createBrowserRouter([
   {
@@ -11,7 +11,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <MainPage />, // Used MainPage component for the '/' path
+        element: <MainPage />, // Corrected path for MainPage component
       },
       {
         path: 'about',
@@ -21,8 +21,9 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>,
+  document.getElementById('root')
 );

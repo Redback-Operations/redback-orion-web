@@ -10,8 +10,11 @@ export const SidebarContainer = styled.div<SidebarProps>`
     background: black;
     color: white;
     padding: 20px;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
     transition: width 0.3s ease;
+    z-index: 1000;
 `;
 
 export const Heading = styled.div`
@@ -20,26 +23,22 @@ export const Heading = styled.div`
     justify-content: space-between;
     font-size: 24px;
     font-weight: 700;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
     cursor: pointer;
     color: white;
-`;
-
-export const Operations = styled.span`
-    color: #CA6D00;
 `;
 
 export const Menu = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 40px;
+    gap: 20px;
 `;
 
 export const MenuItem = styled.div`
     display: flex;
     align-items: center;
-    gap: 35px;
+    gap: 10px;
 `;
 
 export const LogoutContainer = styled.div`
@@ -47,7 +46,7 @@ export const LogoutContainer = styled.div`
     flex-direction: column;
     align-items: flex-start;
     margin-top: auto;
-    gap: 20px;
+    gap: 99px;
 `;
 
 export const LogoutButton = styled.div`
@@ -74,15 +73,32 @@ export const UserAvatar = styled.img`
     border: 3px solid #CA6D00;
 `;
 
-interface CrowdImageProps {
-    collapsed: boolean;
-}
-
-export const CrowdImage = styled.img<CrowdImageProps>`
-    position: absolute;
+export const CrowdImage = styled.img<SidebarProps>`
+    position: fixed;
     top: 0;
-    right: ${({ collapsed }) => (collapsed ? '80px' : '297px')};
+    ${({ collapsed }) => (collapsed ? 'left: 80px;' : 'left: 297px;')}
     width: auto;
     height: 100vh;
     z-index: -1;
+    transition: left 0.3s ease;
+`;
+
+export const RightSidebarContainer = styled.div`
+    width: 80px;
+    height: 100vh;
+    background: #333;
+    color: white;
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const SportsIconsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 `;
