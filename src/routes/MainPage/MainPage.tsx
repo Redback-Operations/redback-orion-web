@@ -4,6 +4,8 @@ import { SidebarContainer, Heading, Menu, MenuItem , LogoutContainer, LogoutButt
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHome, faChartBar, faBell, faCog, faUpload, faQuestionCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faFootballBall, faBasketballBall, faBaseballBall } from '@fortawesome/free-solid-svg-icons';
+// import Menu from './components/Menu';
+// import LogoutButton from './components/LogoutButton/LogoutButton';
 
 function MainPage(): JSX.Element {
     const [collapsed, setCollapsed] = useState<boolean>(false);
