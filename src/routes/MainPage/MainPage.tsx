@@ -1,125 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import { SidebarContainer, Heading, Menu, MenuItem , LogoutContainer, LogoutButton, UserAvatar, CrowdImage, RightSidebarContainer, SportsIconsContainer } from './MainPageStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faHome, faChartBar, faBell, faCog, faUpload, faQuestionCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'; // Import FontAwesome icons
-import { faFootballBall, faBasketballBall, faBaseballBall } from '@fortawesome/free-solid-svg-icons'; // Import sports icons
-
-const SidebarContainer = styled.div<{ collapsed: boolean }>`
-    width: ${({ collapsed }) => (collapsed ? '80px' : '297px')};
-    height: 100vh;
-    background: black;
-    color: white;
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    transition: width 0.3s ease;
-    z-index: 1000;
-`;
-
-const Heading = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    cursor: pointer;
-    color: white;
-`;
-
-const Menu = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-`;
-
-const MenuItem = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 10px;
-`;
-
-const LogoutContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: auto;
-    gap: 99px;
-`;
-
-const LogoutButton = styled.div`
-    cursor: pointer;
-    background-color: black;
-    padding: 10px 20px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-    border: 2px solid white;
-    color: white;
-    
-    &:hover {
-        background-color: red;
-    }
-`;
-
-const UserAvatar = styled.img`
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 3px solid #CA6D00;
-`;
-
-const CrowdImage = styled.img<{ collapsed: boolean }>`
-    position: fixed;
-    top: 0;
-    ${({ collapsed }) => (collapsed ? 'left: 80px;' : 'left: 297px;')}
-    width: auto;
-    height: 100vh;
-    z-index: -1;
-    transition: left 0.3s ease;
-`;
-
-const RightSidebarContainer = styled.div`
-    width: 80px;
-    height: 100vh;
-    background: darkgreen; /* Match the background color of the left sidebar */
-    color: white;
-    position: fixed;
-    top: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`;
-
-const SportsIconsContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-`;
-
-const ImageCarousel = styled.img`
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    transition: opacity 0.5s ease;
-`;
-
-const CarouselContainer = styled.div`
-    width: 100%;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-`;
+import { faBars, faHome, faChartBar, faBell, faCog, faUpload, faQuestionCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faFootballBall, faBasketballBall, faBaseballBall } from '@fortawesome/free-solid-svg-icons';
 
 function MainPage(): JSX.Element {
     const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -132,7 +16,7 @@ function MainPage(): JSX.Element {
         }, 5000);
 
         return () => clearInterval(interval);
-    }, [images.length]);
+    }, [images]);
 
     const toggleSidebar = (): void => {
         setCollapsed(!collapsed);
@@ -149,28 +33,40 @@ function MainPage(): JSX.Element {
                 </Heading>
                 <Menu>
                     <MenuItem style={{ marginBottom: '20px' }}>
-                        <FontAwesomeIcon icon={faHome} size="2x" style={{ marginRight: '20px' }} />
-                        {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Home</div>}
+                        <NavLink to="/" activeClassName="activeLink">
+                            <FontAwesomeIcon icon={faHome} size="2x" style={{ marginRight: '20px' }} />
+                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Home</div>}
+                        </NavLink>
                     </MenuItem>
                     <MenuItem style={{ marginBottom: '20px' }}>
-                        <FontAwesomeIcon icon={faChartBar} size="2x" style={{ marginRight: '20px' }} />
-                        {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Statistics</div>}
+                        <NavLink to="/statistics" activeClassName="activeLink">
+                            <FontAwesomeIcon icon={faChartBar} size="2x" style={{ marginRight: '20px' }} />
+                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Statistics</div>}
+                        </NavLink>
                     </MenuItem>
                     <MenuItem style={{ marginBottom: '20px' }}>
-                        <FontAwesomeIcon icon={faBell} size="2x" style={{ marginRight: '20px' }} />
-                        {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Notifications</div>}
+                        <NavLink to="/notifications" activeClassName="activeLink">
+                            <FontAwesomeIcon icon={faBell} size="2x" style={{ marginRight: '20px' }} />
+                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Notifications</div>}
+                        </NavLink>
                     </MenuItem>
                     <MenuItem style={{ marginBottom: '20px' }}>
-                        <FontAwesomeIcon icon={faCog} size="2x" style={{ marginRight: '20px' }} />
-                        {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Settings</div>}
+                        <NavLink to="/settings" activeClassName="activeLink">
+                            <FontAwesomeIcon icon={faCog} size="2x" style={{ marginRight: '20px' }} />
+                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Settings</div>}
+                        </NavLink>
                     </MenuItem>
                     <MenuItem style={{ marginBottom: '20px' }}>
-                        <FontAwesomeIcon icon={faUpload} size="2x" style={{ marginRight: '20px' }} />
-                        {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Files Upload</div>}
+                        <NavLink to="/upload" activeClassName="activeLink">
+                            <FontAwesomeIcon icon={faUpload} size="2x" style={{ marginRight: '20px' }} />
+                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Files Upload</div>}
+                        </NavLink>
                     </MenuItem>
                     <MenuItem style={{ marginBottom: '20px' }}>
-                        <FontAwesomeIcon icon={faQuestionCircle} size="2x" style={{ marginRight: '20px' }} />
-                        {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Help!</div>}
+                        <NavLink to="/help" activeClassName="activeLink">
+                            <FontAwesomeIcon icon={faQuestionCircle} size="2x" style={{ marginRight: '20px' }} />
+                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Help!</div>}
+                        </NavLink>
                     </MenuItem>
                 </Menu>
                 <LogoutContainer style={{ marginTop: '20px', display: collapsed ? 'none' : 'block' }}>

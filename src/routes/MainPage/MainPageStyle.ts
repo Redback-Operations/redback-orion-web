@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 
-interface SidebarProps {
-    collapsed: boolean;
-}
-
-export const SidebarContainer = styled.div<SidebarProps>`
+export const SidebarContainer = styled.div<{ collapsed: boolean }>`
     width: ${({ collapsed }) => (collapsed ? '80px' : '297px')};
     height: 100vh;
     background: black;
@@ -73,7 +69,7 @@ export const UserAvatar = styled.img`
     border: 3px solid #CA6D00;
 `;
 
-export const CrowdImage = styled.img<SidebarProps>`
+export const CrowdImage = styled.img<{ collapsed: boolean }>`
     position: fixed;
     top: 0;
     ${({ collapsed }) => (collapsed ? 'left: 80px;' : 'left: 297px;')}
@@ -86,7 +82,7 @@ export const CrowdImage = styled.img<SidebarProps>`
 export const RightSidebarContainer = styled.div`
     width: 80px;
     height: 100vh;
-    background: #333;
+    background: darkgreen; /* Match the background color of the left sidebar */
     color: white;
     position: fixed;
     top: 0;
@@ -101,4 +97,22 @@ export const SportsIconsContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+`;
+
+export const ImageCarousel = styled.img`
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: opacity 0.5s ease;
+`;
+
+export const CarouselContainer = styled.div`
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
 `;

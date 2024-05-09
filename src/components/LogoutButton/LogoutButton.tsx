@@ -1,25 +1,20 @@
-// src/components/LogoutButton/LogoutButton.tsx
-
 import React from 'react';
-import { LogoutContainer, LogoutButton, UserAvatar } from './LogoutButtonStyle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { LogoutButtonContainer } from './LogoutButtonStyle';
 
 interface LogoutButtonProps {
-    collapsed: boolean;
+    onClick: () => void;
+    collapsed: boolean; // Explicitly typing collapsed as boolean
 }
 
-const Logout: React.FC<LogoutButtonProps> = ({ collapsed }) => {
+const LogoutButton: React.FC<LogoutButtonProps> = ({ onClick, collapsed }) => {
     return (
-        <LogoutContainer>
-            <div className="user-info">
-                <UserAvatar src="logo.png" alt="User Avatar" />
-                <div className="user-name" style={{ display: collapsed ? 'none' : 'block', marginTop: '10px' }}>Madhav</div>
-            </div>
-            <LogoutButton onClick={() => console.log("Logout clicked")}>
-                <i className="fas fa-sign-out-alt"></i>
-                <div style={{ marginLeft: '10px', display: collapsed ? 'none' : 'block' }}>LogOut</div>
-            </LogoutButton>
-        </LogoutContainer>
+        <LogoutButtonContainer onClick={onClick}>
+            <FontAwesomeIcon icon={faSignOutAlt} size="1x" style={{ marginRight: '20px', display: collapsed ? 'none' : 'inline-block' }} />
+            <div style={{ fontSize: '24px', marginLeft: '10px', display: collapsed ? 'none' : 'block' }}>LogOut</div>
+        </LogoutButtonContainer>
     );
 }
 
-export default Logout;
+export default LogoutButton;

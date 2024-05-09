@@ -1,16 +1,6 @@
-// src/components/LogoutButton/LogoutButtonStyle.ts
-
 import styled from 'styled-components';
 
-export const LogoutContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: auto;
-    gap: 20px;
-`;
-
-export const LogoutButton = styled.div`
+export const LogoutButtonContainer = styled.div`
     cursor: pointer;
     background-color: black;
     padding: 10px 20px;
@@ -25,11 +15,4 @@ export const LogoutButton = styled.div`
     &:hover {
         background-color: red;
     }
-`;
-
-export const UserAvatar = styled.img`
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 3px solid #CA6D00;
 `;
