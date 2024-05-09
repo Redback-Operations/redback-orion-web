@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crowd Management Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .live-updates .updates-container {
+            max-width: 100%; /* Ensure the container spans the full width of the page */
+            height: auto; /* Automatically adjust the height based on content */
+            display: block; /* Ensure the container is treated as a block element */
+            margin: 0 auto; /* Center the container horizontally */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="Logo.svg" alt="Crowd Management Platform Logo">
+        <h1>Welcome to Crowd Management Platform</h1>
+    </header>
+    <main>
+        <section class="introduction">
+            <h2>Introduction</h2>
+            <p>The Crowd Management Platform provides real-time monitoring and analysis of crowd situations and events. Our platform aims to help event organizers, authorities, and stakeholders in effectively managing crowds, ensuring safety, and optimizing event experiences.</p>
+            <!-- Add the image below the paragraph -->
+            <img src="Crowd.png" alt="Crowd Image" class="crowd-image">
+        </section>
+        <section class="live-updates">
+            <h2>Live Updates</h2>
+            <div class="updates-container">
+                <!-- Add the gif image here -->
+                <img src="updates.gif" alt="Live Updates" class="live-updates-image">
+            </div>
+        </section>
+        <section class="charts">
+            <h2>Statistics</h2>
+            <div class="chart-container">
+                <canvas id="crowd-density-chart"></canvas>
+                <canvas id="crowd-distribution-chart"></canvas>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Crowd Management Platform</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
