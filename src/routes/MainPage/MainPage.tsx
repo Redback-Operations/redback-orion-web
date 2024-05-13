@@ -4,8 +4,6 @@ import { SidebarContainer, Heading, Menu, MenuItem , LogoutContainer, LogoutButt
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHome, faChartBar, faBell, faCog, faUpload, faQuestionCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faFootballBall, faBasketballBall, faBaseballBall } from '@fortawesome/free-solid-svg-icons';
-// import Menu from './components/Menu';
-// import LogoutButton from './components/LogoutButton/LogoutButton';
 
 function MainPage(): JSX.Element {
     const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -36,38 +34,38 @@ function MainPage(): JSX.Element {
                 <Menu>
                     <MenuItem style={{ marginBottom: '20px' }}>
                         <NavLink to="/" activeClassName="activeLink">
-                            <FontAwesomeIcon icon={faHome} size="2x" style={{ marginRight: '20px' }} />
-                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Home</div>}
+                            <FontAwesomeIcon icon={faHome} size="2x" style={{ marginRight: '20px', color: 'red' }} />
+                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif', color: 'white' }}>Home</div>}
                         </NavLink>
                     </MenuItem>
                     <MenuItem style={{ marginBottom: '20px' }}>
                         <NavLink to="/statistics" activeClassName="activeLink">
-                            <FontAwesomeIcon icon={faChartBar} size="2x" style={{ marginRight: '20px' }} />
-                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Statistics</div>}
+                            <FontAwesomeIcon icon={faChartBar} size="2x" style={{ marginRight: '20px', color: 'red' }} />
+                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif', color: 'white' }}>Statistics</div>}
                         </NavLink>
                     </MenuItem>
                     <MenuItem style={{ marginBottom: '20px' }}>
                         <NavLink to="/notifications" activeClassName="activeLink">
-                            <FontAwesomeIcon icon={faBell} size="2x" style={{ marginRight: '20px' }} />
-                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Notifications</div>}
+                            <FontAwesomeIcon icon={faBell} size="2x" style={{ marginRight: '20px', color: 'red' }} />
+                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif', color: 'white' }}>Notifications</div>}
                         </NavLink>
                     </MenuItem>
                     <MenuItem style={{ marginBottom: '20px' }}>
                         <NavLink to="/settings" activeClassName="activeLink">
-                            <FontAwesomeIcon icon={faCog} size="2x" style={{ marginRight: '20px' }} />
-                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Settings</div>}
+                            <FontAwesomeIcon icon={faCog} size="2x" style={{ marginRight: '20px', color: 'red' }} />
+                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif', color: 'white' }}>Settings</div>}
                         </NavLink>
                     </MenuItem>
                     <MenuItem style={{ marginBottom: '20px' }}>
                         <NavLink to="/upload" activeClassName="activeLink">
-                            <FontAwesomeIcon icon={faUpload} size="2x" style={{ marginRight: '20px' }} />
-                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Files Upload</div>}
+                            <FontAwesomeIcon icon={faUpload} size="2x" style={{ marginRight: '20px', color: 'red' }} />
+                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif', color: 'white' }}>Files Upload</div>}
                         </NavLink>
                     </MenuItem>
                     <MenuItem style={{ marginBottom: '20px' }}>
                         <NavLink to="/help" activeClassName="activeLink">
-                            <FontAwesomeIcon icon={faQuestionCircle} size="2x" style={{ marginRight: '20px' }} />
-                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif' }}>Help!</div>}
+                            <FontAwesomeIcon icon={faQuestionCircle} size="2x" style={{ marginRight: '20px', color: 'red' }} />
+                            {!collapsed && <div style={{ fontSize: '24px', fontFamily: 'Arial, sans-serif', color: 'white' }}>Help!</div>}
                         </NavLink>
                     </MenuItem>
                 </Menu>
@@ -78,7 +76,7 @@ function MainPage(): JSX.Element {
                     </div>
                     <LogoutButton onClick={() => console.log("Logout clicked")} style={{ fontSize: '24px', marginTop: '20px' }}>
                         <FontAwesomeIcon icon={faSignOutAlt} size="1x" style={{ marginRight: '20px', display: collapsed ? 'none' : 'inline-block' }} />
-                        <div style={{ fontSize: '24px', marginLeft: '10px', display: collapsed ? 'none' : 'block' }}>LogOut</div>
+                        <div style={{ fontSize: '24px', marginLeft: '10px', display: collapsed ? 'none' : 'block', color: 'white' }}>LogOut</div>
                     </LogoutButton>
                 </LogoutContainer>
             </SidebarContainer>
