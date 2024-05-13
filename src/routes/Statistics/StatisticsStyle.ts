@@ -1,13 +1,3 @@
-interface StatisticsStyles {
-    container: React.CSSProperties;
-    title: React.CSSProperties;
-    boxContainer: React.CSSProperties;
-    box: React.CSSProperties;
-    boxTitle: React.CSSProperties;
-    boxContent: React.CSSProperties;
-}
-
-
 const statisticsStyles: StatisticsStyles = {
     container: {
         minHeight: '100vh',
@@ -20,7 +10,7 @@ const statisticsStyles: StatisticsStyles = {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backdropFilter: 'blur(8px)',
-        padding: '20px',
+        padding: '30px',
     },
     title: {
         fontSize: '24px',
@@ -36,10 +26,10 @@ const statisticsStyles: StatisticsStyles = {
     },
     box: {
         backgroundColor: '#f0f0f0', // Greyish color
-        padding: '40px',
+        padding: '60px', // Increase padding to make the boxes larger
         borderRadius: '20px',
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-        width: '80%',
+        width: 'calc(33.33% - 20px)', // Adjust width to accommodate increased padding and maintain grid layout
         transition: 'background-color 0.3s ease',
         cursor: 'pointer',
     },
