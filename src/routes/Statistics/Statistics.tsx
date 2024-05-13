@@ -8,30 +8,50 @@ const Statistics: React.FC = () => {
         const isHovered = hoveredBox === boxNumber;
         return {
             ...statisticsStyles.box,
-            backgroundColor: '#f0f0f0', // Greyish color
+            backgroundColor: 'white', // Set the background color to white
             transition: 'box-shadow 0.3s ease, transform 0.3s ease',
             boxShadow: isHovered ? '0px 0px 20px 5px rgba(255, 140, 0, 0.5)' : '0px 0px 10px rgba(0, 0, 0, 0.2)',
             transform: isHovered ? 'scale(1.05)' : 'scale(1)',
             marginBottom: '20px', // Add some space between boxes
             width: 'calc(50% - 20px)', // Take up half the container's width with spacing
-            height: '200px', // Set a fixed height to ensure uniformity
+            height: '220px', // Increase the height slightly
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center'
         };
     };
+
+    const boxTitles = [
+        "Team Stats",
+        "Player Stats",
+        "Overall Stats",
+        "Overall Performance",
+        "Improvement",
+        "Other Team Stats"
+    ];
 
     return (
         <div style={{ position: 'relative' }}>
             <div style={{ ...statisticsStyles.container }}>
-                <h1 style={statisticsStyles.title}>Statistics Dashboard</h1>
+                <h1 style={{...statisticsStyles.title, borderBottom: '5px solid #FF8C00', paddingBottom: '5px', color: 'red'}}>Statistics Dashboard</h1>
                 <div style={{ ...statisticsStyles.boxContainer }}>
-                    {[1, 2, 3, 4].map((boxNumber) => (
+                    {[1, 2, 3, 4, 5, 6].map((boxNumber) => (
                         <div
                             key={boxNumber}
                             style={getBoxStyles(boxNumber)}
                             onMouseEnter={() => setHoveredBox(boxNumber)}
                             onMouseLeave={() => setHoveredBox(null)}
                         >
-                            <h2 style={statisticsStyles.boxTitle}>Box {boxNumber}</h2>
-                            <p style={statisticsStyles.boxContent}>Content for Box {boxNumber}</p>
+                            <h2 style={{...statisticsStyles.boxTitle, color: 'red'}}>{boxTitles[boxNumber - 1]}</h2>
+                            <hr style={{border: '1px solid #FF8C00', width: '50%', marginTop: '5px', marginBottom: '10px'}} />
+                            {/* Add a comment here for image reference */}
+                            <img 
+                                src={boxNumber % 2 === 1 ? `/bar${Math.ceil(boxNumber / 2)}.jpg` : `/line${boxNumber / 2}.jpg`} 
+                                alt={`Image ${boxNumber}`} 
+                                style={{ maxWidth: '100%', height: 'auto' }} 
+                            />
                         </div>
                     ))}
                 </div>
@@ -41,3 +61,11 @@ const Statistics: React.FC = () => {
 };
 
 export default Statistics;
+
+
+// Image 1 Reference: https://atlas-content-cdn.pixelsquid.com/stock-images/bar-chart-graph-lOoXy18-600.jpg//
+// Image 2 Reference: https://us.123rf.com/450wm/jemastock/jemastock1606/jemastock160613678/59174364-simple-flat-design-colored-bar-graph-icon.jpg?ver=6
+// Image 3 Reference: https://datavizproject.com/wp-content/uploads/types/Multiple-Series-3D-Bar-Chart.png
+// Image 4 Reference: https://upload.wikimedia.org/wikipedia/commons/6/63/Pie-chart.jpg
+// Image 5 Reference: https://cache.getarchive.net/Prod/thumb/cdn12/L3Bob3RvLzIwMTYvMTIvMzEvc3RhdGlzdGljcy1ncmFwaGljLWJ1c2luZXNzLWJ1c2luZXNzLWZpbmFuY2UtODZkOGJjLTEwMjQuanBn/320/320/jpg
+// Image 6 Reference: https://datavizproject.com/wp-content/uploads/types/3D-Stream-Graph.png
