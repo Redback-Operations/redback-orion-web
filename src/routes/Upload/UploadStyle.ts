@@ -1,0 +1,103 @@
+const uploadStyles = {
+    container: {
+        fontFamily: 'Arial, sans-serif',
+        maxWidth: '800px',
+        margin: '0 auto',
+        padding: '20px',
+        border: '1px solid #ccc',
+        borderRadius: '5px',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        backgroundColor: '#f9f9f9',
+    },
+    header: {
+        marginBottom: '20px',
+        textAlign: 'center',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        position: 'relative',
+    },
+    headerText: {
+        margin: '10px 0',
+        fontSize: '2em',
+        position: 'relative',
+        paddingBottom: '10px',
+        color: '#333',
+    },
+    headerUnderline: {
+        content: '""',
+        position: 'absolute',
+        width: '100%',
+        height: '5px',
+        bottom: '0',
+        left: '0',
+        background: 'linear-gradient(to right, #ff4b2b, #ff416c)',
+        borderRadius: '5px',
+        transform: 'translateY(10px) skewX(-15deg)',
+    },
+    logoImg: {
+        width: '150px',
+        height: 'auto', // Maintain aspect ratio
+    },
+    content: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+    },
+    uploadSection: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 2,
+        marginBottom: '20px',
+        padding: '20px',
+        backgroundColor: '#fff',
+        borderRadius: '5px',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    },
+    uploadImage: {
+        width: '100px',
+        height: 'auto', // Maintain aspect ratio
+        marginRight: '20px',
+    },
+    fileInput: {
+        marginBottom: '10px',
+    },
+    uploadButton: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#ff4b2b',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '5px',
+        padding: '10px 20px',
+        cursor: 'pointer',
+        fontSize: '1em',
+    },
+    preview: {
+        marginTop: '10px',
+        maxWidth: '100%',
+        maxHeight: '200px',
+        borderRadius: '5px',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    },
+    message: {
+        marginTop: '10px',
+        color: '#ff4b2b',
+    },
+    footer: {
+        marginTop: '20px',
+        color: '#888',
+        textAlign: 'center',
+        fontSize: '1em',
+    },
+};
+
+export default uploadStyles;
