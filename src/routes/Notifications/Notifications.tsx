@@ -79,7 +79,7 @@ const Notifications: React.FC = () => {
                 </div>
             )}
             <footer style={notificationStyles.footer}>
-                <p>Notification Page ***Player Tracking***</p>
+                <p>Player Tracking</p>
             </footer>
         </div>
     );

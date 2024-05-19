@@ -1,9 +1,9 @@
 const uploadStyles = {
     container: {
         fontFamily: 'Arial, sans-serif',
-        maxWidth: '800px',
+        maxWidth: '1400px', // Increased maxWidth
         margin: '0 auto',
-        padding: '20px',
+        padding: '40px', // Increased padding
         border: '1px solid #ccc',
         borderRadius: '5px',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
@@ -13,7 +13,7 @@ const uploadStyles = {
         backgroundColor: '#f9f9f9',
     },
     header: {
-        marginBottom: '20px',
+        marginBottom: '30px', // Increased marginBottom
         textAlign: 'center',
         width: '100%',
         display: 'flex',
@@ -22,8 +22,8 @@ const uploadStyles = {
         position: 'relative',
     },
     headerText: {
-        margin: '10px 0',
-        fontSize: '2em',
+        margin: '20px 0', // Increased margin
+        fontSize: '2.5em', // Increased fontSize
         position: 'relative',
         paddingBottom: '10px',
         color: '#333',
@@ -40,7 +40,7 @@ const uploadStyles = {
         transform: 'translateY(10px) skewX(-15deg)',
     },
     logoImg: {
-        width: '150px',
+        width: '200px', // Increased width
         height: 'auto', // Maintain aspect ratio
     },
     content: {
@@ -55,19 +55,20 @@ const uploadStyles = {
         alignItems: 'center',
         justifyContent: 'center',
         flex: 2,
-        marginBottom: '20px',
-        padding: '20px',
+        marginBottom: '30px', // Increased marginBottom
+        padding: '30px', // Increased padding
         backgroundColor: '#fff',
         borderRadius: '5px',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     },
     uploadImage: {
-        width: '100px',
+        width: '150px', // Increased width
         height: 'auto', // Maintain aspect ratio
-        marginRight: '20px',
+        marginRight: '30px', // Increased marginRight
     },
     fileInput: {
         marginBottom: '10px',
+        fontSize: '1.2em', // Increased font size for better visibility
     },
     uploadButton: {
         display: 'flex',
@@ -77,26 +78,27 @@ const uploadStyles = {
         color: '#fff',
         border: 'none',
         borderRadius: '5px',
-        padding: '10px 20px',
+        padding: '15px 30px', // Increased padding
         cursor: 'pointer',
-        fontSize: '1em',
+        fontSize: '1.2em', // Increased font size
     },
     preview: {
-        marginTop: '10px',
+        marginTop: '20px', // Increased marginTop
         maxWidth: '100%',
-        maxHeight: '200px',
+        maxHeight: '300px', // Increased maxHeight
         borderRadius: '5px',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     },
     message: {
-        marginTop: '10px',
+        marginTop: '20px', // Increased marginTop
         color: '#ff4b2b',
+        fontSize: '1.2em', // Increased font size
     },
     footer: {
-        marginTop: '20px',
+        marginTop: '30px', // Increased marginTop
         color: '#888',
         textAlign: 'center',
-        fontSize: '1em',
+        fontSize: '1.2em', // Increased font size
     },
 };
 

@@ -65,7 +65,7 @@ const Upload: React.FC = () => {
                 </div>
             </div>
             <footer style={uploadStyles.footer}>
-                <p>Uplaod Page ***Player Tracking***</p>
+                <p>Player Tracking</p>
             </footer>
         </div>
     );
