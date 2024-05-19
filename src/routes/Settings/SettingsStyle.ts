@@ -1,7 +1,8 @@
-const helpStyles = {
+// SettingsStyle.js
+const settingsStyles = {
     container: {
         fontFamily: 'Arial, sans-serif',
-        maxWidth: '1400px',
+        maxWidth: '1200px',
         margin: '0 auto',
         padding: '40px',
         border: '1px solid #ccc',
@@ -11,6 +12,7 @@ const helpStyles = {
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: '#fff',
+        color: '#333', // Default text color
     },
     header: {
         marginBottom: '30px',
@@ -24,9 +26,10 @@ const helpStyles = {
     headerText: {
         margin: '20px 0',
         fontSize: '2.5em',
+        fontWeight: 'bold', // Bold text for headings
         position: 'relative',
         paddingBottom: '10px',
-        color: '#333',
+        color: '#333', // Default color
     },
     headerUnderline: {
         content: '""',
@@ -45,63 +48,48 @@ const helpStyles = {
     },
     content: {
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
         width: '100%',
     },
-    sideImage: {
-        maxWidth: '300px',
-        maxHeight: '300px',
-        width: 'auto',
-        height: 'auto',
-        marginRight: '30px',
-    },
-    chatSection: {
-        flex: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '30px',
-        backgroundColor: '#fff',
+    formContainer: {
+        width: '100%',
+        maxWidth: '600px',
+        backgroundColor: '#f9f9f9',
+        padding: '20px',
         borderRadius: '5px',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     },
-    chatBox: {
-        width: '100%',
-        height: '300px',
-        border: '1px solid #eee',
-        borderRadius: '5px',
-        marginBottom: '20px',
-        overflowY: 'auto',
-        padding: '10px',
-        backgroundColor: '#f0f0f0',
-    },
-    chatMessage: {
-        marginBottom: '10px',
-        padding: '10px',
-        borderRadius: '5px',
-        backgroundColor: '#e0e0e0',
-    },
-    chatInputSection: {
+    form: {
         display: 'flex',
-        width: '100%',
+        flexDirection: 'column',
+    },
+    section: {
         marginBottom: '20px',
     },
-    chatInput: {
-        flex: 1,
+    label: {
+        marginBottom: '15px',
+        fontSize: '1.2em',
+        color: '#333', // Default color
+    },
+    input: {
         padding: '10px',
         fontSize: '1.2em',
-        borderRadius: '5px 0 0 5px',
+        borderRadius: '5px',
         border: '1px solid #ccc',
+        marginTop: '5px',
+        width: '100%',
     },
-    sendButton: {
-        padding: '10px 20px',
-        backgroundColor: '#ff4b2b',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '0 5px 5px 0',
-        cursor: 'pointer',
+    checkbox: {
+        marginRight: '10px',
+    },
+    select: {
+        padding: '10px',
         fontSize: '1.2em',
+        borderRadius: '5px',
+        border: '1px solid #ccc',
+        marginTop: '5px',
+        width: '100%',
     },
     submitButton: {
         padding: '10px 20px',
@@ -111,11 +99,18 @@ const helpStyles = {
         borderRadius: '5px',
         cursor: 'pointer',
         fontSize: '1.2em',
-    },
-    message: {
         marginTop: '20px',
-        color: '#ff4b2b',
+    },
+    dangerButton: {
+        padding: '10px 20px',
+        backgroundColor: '#ff4b2b',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '5px',
+        cursor: 'pointer',
         fontSize: '1.2em',
+        marginTop: '10px',
+        marginBottom: '10px',
     },
     footer: {
         marginTop: '30px',
@@ -125,4 +120,20 @@ const helpStyles = {
     },
 };
 
-export default helpStyles;
+const darkModeStyles = {
+    headerText: {
+        color: '#fff', // White color for dark mode
+        fontWeight: 'bold', // Bold font weight for headings
+    },
+    label: {
+        color: '#fff', // White color for dark mode
+    },
+    heading: {
+        color: '#000', // Black color for headings in dark mode
+    },
+    subheading: {
+        color: '#000', // Black color for subheadings in dark mode
+    },
+};
+
+export { settingsStyles, darkModeStyles };

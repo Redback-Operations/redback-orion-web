@@ -81,4 +81,4 @@ export default Help;
 
 
 //Refernce Help Image
-//https://www.google.com/url?sa=i&url=https%3A%2F%2Ficonscout.com%2F3d-illustration%2Fsocial-media-apps-5982104&psig=AOvVaw2QUnBLh_snu0eNGEV_MqUy&ust=1716192393996000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqGAoTCKCosIShmYYDFQAAAAAdAAAAABCXAQ
+//https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Fpremium-vector%2Fonline-help-icon-3d-illustration-from-feedback-collection-creative-online-help-3d-icon-web-design-templates-infographics-more_32952114.htm&psig=AOvVaw1tWzzkXaS2jAcxBUxszOGk&ust=1716205946491000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNDRmMDTmYYDFQAAAAAdAAAAABAE
