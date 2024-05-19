@@ -1,0 +1,245 @@
+.sign-up-page {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.sign-up-page .div-3 {
+  background-color: #ffffff;
+  height: 982px;
+  position: relative;
+  width: 1514px;
+}
+
+.sign-up-page .overlap-15 {
+  background-image: url(../../../static/img/rectangle-1.png);
+  background-position: 50% 50%;
+  background-size: cover;
+  height: 982px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 552px;
+}
+
+.sign-up-page .undraw-greek-freak-j {
+  height: 198px;
+  left: 165px;
+  position: absolute;
+  top: 245px;
+  width: 222px;
+}
+
+.sign-up-page .player-TRACKING-4 {
+  color: transparent;
+  font-family: "Inter", Helvetica;
+  font-size: 50px;
+  font-weight: 700;
+  height: 76px;
+  left: 57px;
+  letter-spacing: -0.41px;
+  line-height: 22px;
+  position: absolute;
+  top: 454px;
+  width: 448px;
+}
+
+.sign-up-page .text-wrapper-35 {
+  color: #e97462;
+  letter-spacing: -0.2px;
+}
+
+.sign-up-page .text-wrapper-36 {
+  color: #370e4a;
+  letter-spacing: -0.2px;
+}
+
+.sign-up-page .text-wrapper-37 {
+  color: #370e4a;
+  font-family: "Inter", Helvetica;
+  font-size: 80px;
+  font-weight: 600;
+  height: 127px;
+  left: 844px;
+  letter-spacing: -0.41px;
+  line-height: 22px;
+  position: absolute;
+  top: 87px;
+  width: 650px;
+}
+
+.sign-up-page .sign-up-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sign-up-page .overlap-group-4 {
+  background-color: #e97462;
+  border-radius: 20px;
+  height: 76px;
+  left: 875px;
+  position: absolute;
+  top: 649px;
+  width: 328px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-up-page .text-wrapper-38 {
+  color: #370e4a;
+  font-family: "Inter", Helvetica;
+  font-size: 40px;
+  font-weight: 500;
+  height: 22px;
+  letter-spacing: -0.41px;
+  line-height: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.sign-up-page .overlap-16,
+.sign-up-page .overlap-17,
+.sign-up-page .overlap-18 {
+  background-color: #e4e4e475;
+  border-radius: 10px;
+  height: 55px;
+  left: 656px;
+  position: absolute;
+  width: 739px;
+  display: flex;
+  align-items: center;
+  padding-left: 23px;
+}
+
+.sign-up-page .overlap-16 {
+  top: 288px;
+}
+
+.sign-up-page .overlap-17 {
+  top: 413px;
+}
+
+.sign-up-page .overlap-18 {
+  top: 538px;
+}
+
+.sign-up-page .input-field {
+  color: #5e5d65;
+  font-family: "Inter", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.41px;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  caret-color: #000;
+  text-shadow: 0 0 0 #000;
+  padding-left: 5px;
+}
+
+.sign-up-page .input-field::placeholder {
+  color: #5e5d65;
+  opacity: 1;
+}
+
+.sign-up-page .input-field:focus::placeholder {
+  opacity: 0;
+}
+
+.sign-up-page .text-wrapper-40 {
+  color: #0e080e;
+  font-family: "Inter", Helvetica;
+  font-size: 25px;
+  font-weight: 400;
+  height: 22px;
+  left: 656px;
+  letter-spacing: -0.41px;
+  line-height: 22px;
+  position: absolute;
+  top: 249px;
+  white-space: nowrap;
+}
+
+.sign-up-page .text-wrapper-41 {
+  color: #0e080e;
+  font-family: "Inter", Helvetica;
+  font-size: 25px;
+  font-weight: 400;
+  height: 22px;
+  left: 656px;
+  letter-spacing: -0.41px;
+  line-height: 22px;
+  position: absolute;
+  top: 374px;
+  white-space: nowrap;
+}
+
+.sign-up-page .text-wrapper-42 {
+  color: #0e080e;
+  font-family: "Inter", Helvetica;
+  font-size: 25px;
+  font-weight: 400;
+  height: 22px;
+  left: 656px;
+  letter-spacing: -0.41px;
+  line-height: 22px;
+  position: absolute;
+  top: 499px;
+  white-space: nowrap;
+}
+
+.sign-up-page .text-wrapper-43 {
+  color: #0e080e;
+  font-family: "Inter", Helvetica;
+  font-size: 25px;
+  font-weight: 400;
+  height: 22px;
+  left: 1026px;
+  letter-spacing: -0.41px;
+  line-height: 22px;
+  position: absolute;
+  top: 744px;
+  white-space: nowrap;
+}
+
+.sign-up-page .text-wrapper-44 {
+  color: #0e080e;
+  font-family: "Inter", Helvetica;
+  font-size: 30px;
+  font-weight: 400;
+  height: 22px;
+  left: 996px;
+  letter-spacing: -0.41px;
+  line-height: 22px;
+  position: absolute;
+  top: 786px;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.sign-up-page .line-6 {
+  height: 1px;
+  left: 998px;
+  object-fit: cover;
+  position: absolute;
+  top: 821px;
+  width: 83px;
+}
+
+.sign-up-page .microsoftteams-image-5 {
+  height: 85px;
+  left: 552px;
+  object-fit: cover;
+  position: absolute;
+  top: 8px;
+  width: 100px;
+}
