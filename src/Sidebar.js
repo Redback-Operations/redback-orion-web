@@ -8,12 +8,11 @@ const Sidebar = () => {
     <aside className="bg-black text-white w-[150px] min-h-screen pt-16 p-4 fixed left-0 top-0 hidden sm:block">
       <ul className="space-y-4 mt-16">
         {[
-          "Market",
-          "Supermarket",
+          "Tier1",
+          "Tier2",
           "Railway Station",
-          "Malls",
           "Stadium",
-          "Airport",
+          "Entrance",
         ].map((item, index) => (
           <li
             key={index}
