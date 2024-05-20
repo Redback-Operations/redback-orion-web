@@ -6,12 +6,11 @@ const Navbar = () => {
     <nav className="bg-black text-white p-4">
       <ul className="flex justify-center space-x-6">
         {[
-          "Market",
-          "Supermarket",
+          "Tier1",
+          "Tier2",
           "Railway Station",
-          "Malls",
           "Stadium",
-          "Airport",
+          "Entrance",
         ].map((item, index) => (
           <li key={index} className="hover:underline">
             {item}
