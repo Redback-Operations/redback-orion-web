@@ -1,31 +1,31 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {
-	createBrowserRouter,
-	RouterProvider,
-} from 'react-router-dom';
-import Root from './routes/Root/Root.tsx';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Login } from './routes/Login/Login';
+import { ExploreMore } from './routes/ExploreMore/ExploreMore';
+import { LandingPage } from './routes/LandingPage/LandingPage';
+import { MyProfile } from './routes/MyProfile/MyProfile';
+import { PlayerStats } from './routes/PlayerStats/PlayerStats';
+import { TeamStats } from './routes/TeamStats/TeamStats';
 
-const router = createBrowserRouter([
-	{
-		element: <Root/>,
-		// Handling errors inside Root so we can keep the core layout around the error message
-		errorElement: <Root/>,
-		children: [
-			{
-				path: '/',
-				element: <div>Home</div>,
-			},
-			{
-				path: 'about',
-				element: <div>About</div>,
-			}
-		],
-	},
-]);
+// Ensure that the HTML element 'app' exists and is not null
+const app = document.getElementById('app') as HTMLElement;
+const root = createRoot(app);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-	<React.StrictMode>
-		<RouterProvider router={router} />
-	</React.StrictMode>,
-);
+const App: React.FC = () => {
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<LandingPage />} />
+				<Route path="/ExploreMore" element={<ExploreMore />} />
+				<Route path="/Login" element={<Login />} />
+				<Route path="/MyProfile" element={<MyProfile />} />
+				<Route path="/PlayerStats" element={<PlayerStats />} />
+				<Route path="/TeamStats" element={<TeamStats />} />
+				<Route path="*" element={<div>404 Page not found</div>} />
+			</Routes>
+		</BrowserRouter>
+	);
+};
+
+root.render(<App />);

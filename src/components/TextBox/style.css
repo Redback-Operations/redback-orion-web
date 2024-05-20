@@ -1,0 +1,268 @@
+.text-box {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  width: 318px;
+}
+
+.text-box .title {
+  align-self: stretch;
+  height: 20px;
+  position: relative;
+  width: 100%;
+}
+
+.text-box .txt {
+  color: var(--primaryone);
+  font-family: "Nunito", Helvetica;
+  font-size: 16px;
+  font-weight: 700;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 19.6px;
+  position: absolute;
+  top: -1px;
+  white-space: nowrap;
+}
+
+.text-box .box {
+  align-self: stretch;
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+.text-box .div {
+  position: relative;
+}
+
+.text-box .text-wrapper {
+  color: var(--secanderytwo);
+  font-family: "Nunito", Helvetica;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 19.6px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.text-box .iconly-light-outline {
+  height: 16px;
+  position: relative;
+  width: 16px;
+}
+
+.text-box .box-2 {
+  align-items: center;
+  background-color: var(--primarytow);
+  border: 1px solid;
+  border-color: var(--secanderytwo);
+  border-radius: 8px;
+  display: flex;
+  height: 44px;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 0px 12px;
+  position: relative;
+  width: 76px;
+}
+
+.text-box .txt-2 {
+  color: var(--primaryone);
+  font-family: "Nunito", Helvetica;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 19.6px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.text-box .txt-wrapper {
+  align-items: center;
+  background-color: var(--primarytow);
+  border: 1px solid;
+  border-color: var(--secanderytwo);
+  border-radius: 8px;
+  display: flex;
+  flex: 1;
+  flex-grow: 1;
+  gap: 10px;
+  height: 44px;
+  overflow: hidden;
+  padding: 0px 12px;
+  position: relative;
+}
+
+.text-box .txt-3 {
+  font-family: "Nunito", Helvetica;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 19.6px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.text-box .img {
+  position: relative;
+}
+
+.text-box .drop-down {
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.text-box .default {
+  align-items: center;
+  background-color: var(--primarytow);
+  border: 1px solid;
+  border-color: var(--secanderytwo);
+  border-radius: 8px;
+  gap: 10px;
+  height: 44px;
+  overflow: hidden;
+  padding: 0px 12px;
+}
+
+.text-box .password {
+  align-items: center;
+  background-color: var(--primarytow);
+  border: 1px solid;
+  border-color: var(--secanderytwo);
+  border-radius: 8px;
+  height: 44px;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 0px 12px;
+}
+
+.text-box .active {
+  align-items: center;
+  background-color: var(--primarytow);
+  border: 1px solid;
+  border-color: var(--secanderyone);
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px #26b8931a, -1px -1px 4px #26b89333;
+  gap: 1px;
+  height: 44px;
+  overflow: hidden;
+  padding: 0px 12px;
+}
+
+.text-box .phon-number {
+  align-items: flex-start;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.text-box .value {
+  align-items: center;
+  background-color: var(--primarytow);
+  border: 1px solid;
+  border-color: var(--secanderytwo);
+  border-radius: 8px;
+  gap: 10px;
+  height: 44px;
+  overflow: hidden;
+  padding: 0px 12px;
+}
+
+.text-box .box.drop-down .div {
+  align-items: center;
+  background-color: var(--primarytow);
+  border: 1px solid;
+  border-color: var(--secanderytwo);
+  border-radius: 8px;
+  display: flex;
+  flex: 1;
+  flex-grow: 1;
+  height: 44px;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 0px 12px;
+}
+
+.text-box .box.default .div {
+  color: var(--secanderytwo);
+  font-family: "Nunito", Helvetica;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 19.6px;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.text-box .box.value .div {
+  color: var(--primaryone);
+  font-family: "Nunito", Helvetica;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 19.6px;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.text-box .box.drop-down .txt-3 {
+  color: var(--secanderytwo);
+}
+
+.text-box .box.default .txt-3 {
+  color: var(--secanderytwo);
+}
+
+.text-box .box.password .txt-3 {
+  color: var(--secanderytwo);
+}
+
+.text-box .box.active .txt-3 {
+  color: var(--primaryone);
+}
+
+.text-box .box.phon-number .txt-3 {
+  color: var(--secanderytwo);
+}
+
+.text-box .box.value .txt-3 {
+  color: var(--secanderytwo);
+}
+
+.text-box .box.drop-down .img {
+  height: 24px;
+  width: 24px;
+}
+
+.text-box .box.default .img {
+  height: 24px;
+  width: 24px;
+}
+
+.text-box .box.password .img {
+  height: 24px;
+  width: 24px;
+}
+
+.text-box .box.active .img {
+  height: 18px;
+  object-fit: cover;
+  width: 1px;
+}
+
+.text-box .box.phon-number .img {
+  height: 24px;
+  width: 24px;
+}
+
+.text-box .box.value .img {
+  height: 24px;
+  width: 24px;
+}
