@@ -1,12 +1,11 @@
-/*
-We're constantly improving the code you see. 
-Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
-*/
-
-import PropTypes from "prop-types";
 import React from "react";
 
-export const IconlyLightOutlineArrowDown22 = ({ color = "#200E32", className }) => {
+interface IconlyLightOutlineArrowDown22Props {
+  color?: string;
+  className?: string;
+}
+
+export const IconlyLightOutlineArrowDown22: React.FC<IconlyLightOutlineArrowDown22Props> = ({ color = "#200E32", className }) => {
   return (
     <svg
       className={`iconly-light-outline-arrow-down-2-2 ${className}`}
@@ -23,8 +22,4 @@ export const IconlyLightOutlineArrowDown22 = ({ color = "#200E32", className }) 
       />
     </svg>
   );
-};
-
-IconlyLightOutlineArrowDown22.propTypes = {
-  color: PropTypes.string,
 };

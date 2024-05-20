@@ -2,7 +2,7 @@ import React from 'react';
 import './style.css';
 import { Link } from 'react-router-dom';
 
-export const ExploreMore = () => {
+export const ExploreMore: React.FC = () => {
   return (
     <div className="explore-more">
       <div className="div">
@@ -208,3 +208,4 @@ export const ExploreMore = () => {
     </div>
   );
 };
+

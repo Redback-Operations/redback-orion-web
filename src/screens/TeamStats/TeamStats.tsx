@@ -2,7 +2,7 @@ import React from 'react';
 import './style.css';
 import { Link } from 'react-router-dom';
 
-export const TeamStats = () => {
+export const TeamStats: React.FC = () => {
   return (
     <div className="team-stats">
       <div className="div">
@@ -126,7 +126,7 @@ export const TeamStats = () => {
             <div className="text-wrapper-9">Useful links</div>
             <div className="text-wrapper-10">Introduction</div>
             <div className="text-wrapper-10">About Us</div>
-            <div className="text-wrapper-10">Terms &amp; Conditions</div>
+            <div className="text-wrapper-10">Terms & Conditions</div>
             <div className="text-wrapper-10">Privacy Policy</div>
             <div className="text-wrapper-10">Support Center</div>
           </div>
@@ -183,7 +183,7 @@ export const TeamStats = () => {
           </p>
         </div>
         <div className="https-www-freepik">
-          https://www.freepik.com/free-vector/football-position-chart-infographic_29759685.htm#query=line%20up%20soccer&amp;position=0&amp;from_view=keyword&amp;track=ais_user&amp;uuid=22cb9de8-136f-4d07-9cec-b706e57b86d2
+          https://www.freepik.com/free-vector/football-position-chart-infographic_29759685.htm#query=line%20up%20soccer&position=0&from_view=keyword&track=ais_user&uuid=22cb9de8-136f-4d07-9cec-b706e57b86d2
         </div>
       </div>
     </div>

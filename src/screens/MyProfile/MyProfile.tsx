@@ -4,7 +4,7 @@ import { TextBox } from '../../components/TextBox';
 import './style.css';
 import { Link } from 'react-router-dom';
 
-export const MyProfile = () => {
+export const MyProfile: React.FC = () => {
   return (
     <div className="my-profile">
       <div className="main-content">

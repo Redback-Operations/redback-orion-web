@@ -2,7 +2,7 @@ import React from 'react';
 import './style.css';
 import { Link } from 'react-router-dom';
 
-export const PlayerStats = () => {
+export const PlayerStats: React.FC = () => {
   return (
     <div className="player-stats">
       <div className="div">

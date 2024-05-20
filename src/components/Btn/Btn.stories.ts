@@ -5,7 +5,7 @@ export default {
   component: Btn,
   argTypes: {
     btn: {
-      options: ["praimery", "secondary", "praimery-hover"],
+      options: ["primary", "secondary", "primary-hover"],
       control: { type: "select" },
     },
   },
@@ -13,7 +13,7 @@ export default {
 
 export const Default = {
   args: {
-    btn: "praimery",
+    btn: "primary",
     className: {},
     formAtomValueClassName: {},
     divClassName: {},
