@@ -1,0 +1,10 @@
+.App {
+    text-align: center;
+  }
+  
+  main {
+    padding: 20px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    color: #4b0082; /* Indigo color for text */
+  }
+  
