@@ -158,7 +158,7 @@ const App: React.FC = () => (
                   <p>Discover real-time insights into crowd movements and interactions using advanced IoT and sensor technology.</p>
                   <ExploreButton to="/live-data">Explore Our Data</ExploreButton>
                 </div>
-                <img src={HomeCrowd} alt="Crowd" style={{ width: '50%' }} />
+                <img src={HomeCrowd} alt="Crowd" style={{ width: '40%' }} />
               </div>
             </Section>
             <Section>
