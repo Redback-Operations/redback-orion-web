@@ -95,6 +95,7 @@ const App: React.FC = () => (
         <Link to="/about">About Us</Link>
         <Link to="/live-data">Live Data</Link>
         <Link to="/contact">Contact Us</Link>
+        <Link to="/live-video">Live Video</Link>
       </Nav>
     </Header>
     <Main>
@@ -158,7 +159,10 @@ const App: React.FC = () => (
           </div>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Link to="/live-video">
-              <button style={{ background: 'lightpurple', borderRadius: '20px', padding: '10px 20px', marginTop: '10px' }}>Live Video Streams</button>
+              <button
+                style={{ background: 'lightpurple', borderRadius: '20px', padding: '10px 20px', marginTop: '10px' }}
+                onClick={() => window.open('http://localhost:8000/video_feed', '_blank')}
+              >Live Video Streams</button>
             </Link>
           </div>
         </Grid>
@@ -231,7 +235,9 @@ const App: React.FC = () => (
         <p>© Crowd Dynamics 2023, All Rights Reserved</p>
       </div>
     </Footer>
+
   </Container>
+  
 );
 
 export default App;
