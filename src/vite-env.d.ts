@@ -17,12 +17,12 @@ declare module 'react/jsx-runtime' {
   }
   
   declare module 'react' {
-    const React: typeof import("react");
+    const React: typeof import('react');
     export default React;
   }
   
   declare module 'react-dom/client' {
-    const ReactDOM: typeof import("react-dom/client");
+    const ReactDOM: typeof import('react-dom/client');
     export default ReactDOM;
   }
   

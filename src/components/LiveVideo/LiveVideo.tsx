@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { LiveVideoWrapper } from './LiveVideo.style';
 
 type LiveVideoProps = {
   videoUrl?: string;
-};
+}
 
 const LiveVideo: FC<LiveVideoProps> = ({ videoUrl = 'http://localhost:5000/video_feed' }) => {
   const [isLoading, setIsLoading] = useState(true);
