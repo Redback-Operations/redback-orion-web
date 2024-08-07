@@ -76,12 +76,25 @@ const Section = styled.section`
   margin: 40px 0;
   text-align: center;
 `;
+const LiveGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  justify-content: center;
+`;
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 10px;
   justify-content: center;
+`;
+
+const Frame = styled.div`
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
 `;
 
 const TeamGrid = styled.div`
@@ -104,7 +117,7 @@ const Footer = styled.footer`
 `;
 
 const FeatureLogo = styled.img`
-  width: 25%;
+  width: 10%;
   margin: 0 auto;
 `;
 
@@ -136,33 +149,33 @@ const App: React.FC = () => (
         <Route path="/" element={
           <>
             <Section>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flow', justifyContent: 'space-between' }}>
                 <div>
                   <h1>Welcome to Crowd Dynamics</h1>
                   <p>Discover real-time insights into crowd movements and interactions using advanced IoT and sensor technology.</p>
                 </div>
-                <img src={HomeCrowd} alt="Crowd" style={{ width: '40%' }} />
+                <img src={HomeCrowd} alt="Crowd" style={{ width: '20%' }} />
               </div>
             </Section>
             <Section>
               <h2>Live Data Stats</h2>
-              <Grid>
-                <div>
-                  <h3>Total Number of people</h3>
-                  <p>Real-time statistics showcasing the number of people, heatmaps, and video feeds.</p>
-                </div>
-                <div>
+              <LiveGrid>
+                <Frame>
                   <h3>Heatmap (Crowd density)</h3>
                   <p>Visualize crowd density and movement patterns with heatmaps.</p>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <Link to="#" onClick={(e) => { e.preventDefault(); window.open('http://localhost:3000/video_feed', '_blank'); }}>
-                    <button style={{ background: 'lightpurple', borderRadius: '20px', padding: '10px 20px', marginTop: '10px' }}>
-                      Live Video Streams
-                    </button>
-                  </Link>
-                </div>
-              </Grid>
+                </Frame>
+                <Frame>
+                  <h3>Live Video Stream</h3>
+                  <p>Live Video</p>
+                </Frame>
+                </LiveGrid>
+
+                <LiveGrid>
+                  <Frame>
+                  <h3>Stats</h3>
+                  <p>Real-time statistics showcasing the number of people etc</p>
+                </Frame>
+                </LiveGrid>
             </Section>
             <Section>
               <h2>Key Features</h2>
@@ -204,27 +217,27 @@ const App: React.FC = () => (
               <TeamGrid>
                 <TeamMember>
                   <img src={PJohnDoe} alt="John Doe" />
-                  <h3>John Doe</h3>
-                  <p>Lead Data Scientist</p>
+                  <h3>Vincent Tran</h3>
+                  <p>Project Co-Leader</p>
                 </TeamMember>
                 <TeamMember>
                   <img src={PJaneSmith} alt="Jane Smith" />
-                  <h3>Jane Smith</h3>
-                  <p>IoT Specialist</p>
+                  <h3>Shrice Nguyen</h3>
+                  <p>Team Member</p>
                 </TeamMember>
                 <TeamMember>
                   <img src={PAliceJohnson} alt="Alice Johnson" />
-                  <h3>Alice Johnson</h3>
-                  <p>Machine Learning Engineer</p>
+                  <h3>Mei Hei Chan</h3>
+                  <p>Team Member</p>
                 </TeamMember>
                 <TeamMember>
                   <img src={PRobertDown} alt="Robert Brown" />
-                  <h3>Robert Brown</h3>
-                  <p>Computer Vision Expert</p>
+                  <h3>Hishoban K.</h3>
+                  <p>Team Member</p>
                 </TeamMember>
                 <TeamMember>
                   <img src={PEmilyDavis} alt="Emily Davis" />
-                  <h3>Emily Davis</h3>
+                  <h3>Nicholas K.</h3>
                   <p>Project Manager</p>
                 </TeamMember>
               </TeamGrid>
