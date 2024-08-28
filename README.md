@@ -49,6 +49,7 @@ This project is a Crowd Monitoring Web Application designed to track and analyze
     MONGODB_URI=<your-mongodb-uri>
 
 ## Project Structure#
+
 .
 ├── public/
 │   ├── index.html
@@ -78,6 +79,7 @@ This project is a Crowd Monitoring Web Application designed to track and analyze
 └── README.md (Project documentation)
 
 
+
 ## Editing the Website
 ### Modifying Components
 #### Live Video Stream:
@@ -98,7 +100,7 @@ This project is a Crowd Monitoring Web Application designed to track and analyze
 - Displays real-time statistics such as headcount, compliance, and social distance.
 - To modify, update the data-fetching logic or table design.
 
-### tyling
+### Styling
 #### Global Styles:
 
 - Global CSS styles are located in src/index.css.
