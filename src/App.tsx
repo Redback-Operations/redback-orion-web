@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import HomeLogo from './assets/home_logo.png';
@@ -21,7 +21,7 @@ import SpaceXLogo from './assets/spacex_logo.svg';
 import FBLogo from './assets/fb_logo.svg';
 import IGLogo from './assets/ig_logo.svg';
 import GitHubLogo from './assets/github_logo.svg';
-import LiveVideo from './components/LiveVideo/LiveVideo';
+import VideoStream from './components/VideoStream/VideoStream';
 
 const Container = styled.div`
   font-family: Arial, sans-serif;
@@ -76,11 +76,31 @@ const Section = styled.section`
   margin: 40px 0;
   text-align: center;
 `;
+
 const LiveGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 30px;
   justify-content: center;
+`;
+
+const StatsSection = styled.section`
+  margin: 40px 0;
+  text-align: center;
+`;
+
+const StatsTable = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, auto);
+  gap: 0px;
+`;
+
+const Frame = styled.div`
+  border: 4px solid darkblue;
+  border-radius: 0px;
+  padding: 20px;
+  text-align: center;
 `;
 
 const Grid = styled.div`
@@ -88,13 +108,6 @@ const Grid = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   justify-content: center;
-`;
-
-const Frame = styled.div`
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
 `;
 
 const TeamGrid = styled.div`
@@ -133,156 +146,193 @@ const TeamMember = styled.div`
   }
 `;
 
-const App: React.FC = () => (
-  <Container>
-    <Header>
-      <Logo src={HomeLogo} alt="Home Logo" />
-      <CenterNav>
-        <Link to="/">Crowd Dynamics</Link>
-      </CenterNav>
-      <Nav>
-        <ContactButton to="/contact">Contact Us</ContactButton>
-      </Nav>
-    </Header>
-    <Main>
-      <Routes>
-        <Route path="/" element={
-          <>
-            <Section>
-              <div style={{ display: 'flow', justifyContent: 'space-between' }}>
-                <div>
-                  <h1>Welcome to Crowd Dynamics</h1>
-                  <p>Discover real-time insights into crowd movements and interactions using advanced IoT and sensor technology.</p>
-                </div>
-                <img src={HomeCrowd} alt="Crowd" style={{ width: '20%' }} />
-              </div>
-            </Section>
-            <Section>
-              <h2>Live Data Stats</h2>
-              <LiveGrid>
-                <Frame>
-                  <h3>Heatmap (Crowd density)</h3>
-                  <p>Visualize crowd density and movement patterns with heatmaps.</p>
-                </Frame>
-                <Frame>
-                  <h3>Live Video Stream</h3>
-                  <p>Live Video</p>
-                </Frame>
-                </LiveGrid>
+const App: React.FC = () => {
+  const [stats, setStats] = useState<any>({});
 
-                <LiveGrid>
-                  <Frame>
-                  <h3>Stats</h3>
-                  <p>Real-time statistics showcasing the number of people etc</p>
-                </Frame>
-                </LiveGrid>
-            </Section>
-            <Section>
-              <h2>Key Features</h2>
-              <Grid>
-                <div>
-                  <FeatureLogo src={RealTimeLogo} alt="Real-Time Tracking" />
-                  <h3>Real-Time Tracking</h3>
-                  <p>Monitor crowd movements and interactions in real-time.</p>
-                </div>
-                <div>
-                  <FeatureLogo src={IoTDeviceLogo} alt="Advanced IoT Devices" />
-                  <h3>Advanced IoT Devices</h3>
-                  <p>Utilize cutting-edge wearable technology for accurate data collection.</p>
-                </div>
-                <div>
-                  <FeatureLogo src={ComputerVisionLogo} alt="Computer Vision" />
-                  <h3>Computer Vision</h3>
-                  <p>Employ computer vision to analyze and interpret video streams.</p>
-                </div>
-                <div>
-                  <FeatureLogo src={PredictModelLogo} alt="Predictive Modeling" />
-                  <h3>Predictive Modeling</h3>
-                  <p>Use predictive analytics to forecast crowd behavior.</p>
-                </div>
-                <div>
-                  <FeatureLogo src={HeatmapLogo} alt="Heatmaps" />
-                  <h3>Heatmaps</h3>
-                  <p>Visualize crowd density and movement patterns with heatmaps.</p>
-                </div>
-                <div>
-                  <FeatureLogo src={InteractiveLogo} alt="Interaction Insights" />
-                  <h3>Interaction Insights</h3>
-                  <p>Gain insights into how people interact within the crowd.</p>
-                </div>
-              </Grid>
-            </Section>
-            <Section>
-              <h2>Meet our team</h2>
-              <TeamGrid>
-                <TeamMember>
-                  <img src={PJohnDoe} alt="John Doe" />
-                  <h3>Vincent Tran</h3>
-                  <p>Project Co-Leader</p>
-                </TeamMember>
-                <TeamMember>
-                  <img src={PJaneSmith} alt="Jane Smith" />
-                  <h3>Shrice Nguyen</h3>
-                  <p>Team Member</p>
-                </TeamMember>
-                <TeamMember>
-                  <img src={PAliceJohnson} alt="Alice Johnson" />
-                  <h3>Mei Hei Chan</h3>
-                  <p>Team Member</p>
-                </TeamMember>
-                <TeamMember>
-                  <img src={PRobertDown} alt="Robert Brown" />
-                  <h3>Hishoban K.</h3>
-                  <p>Team Member</p>
-                </TeamMember>
-                <TeamMember>
-                  <img src={PEmilyDavis} alt="Emily Davis" />
-                  <h3>Nicholas K.</h3>
-                  <p>Project Manager</p>
-                </TeamMember>
-              </TeamGrid>
-            </Section>
-            <Section>
-              <h2>Get in Touch</h2>
-              <Grid>
-                <div>
-                  <img src={OpenHours} alt="Office Hours" />
-                  <h3>Office Hours</h3>
-                  <p>Monday-Friday 8:00 am to 5:00 pm</p>
-                </div>
-                <div>
-                  <img src={Location} alt="Our Address" />
-                  <h3>Our Address</h3>
-                  <p>221 Burwood Highway, Burwood, Victoria 3125</p>
-                </div>
-                <div>
-                  <img src={Call} alt="Contact Us" />
-                  <h3>Contact Us</h3>
-                  <p>+61 3 9244 6333</p>
-                </div>
-              </Grid>
-            </Section>
-          </>
-        } />
-        <Route path="/live-video" element={<LiveVideo />} />
-      </Routes>
-    </Main>
-    <Footer>
-      <div>
-        <img src={SpaceXLogo} alt="Twitter" style={{ width: '30px', margin: '0 10px' }} />
-        <img src={FBLogo} alt="Facebook" style={{ width: '30px', margin: '0 10px' }} />
-        <img src={IGLogo} alt="Instagram" style={{ width: '30px', margin: '0 10px' }} />
-        <img src={GitHubLogo} alt="GitHub" style={{ width: '30px', margin: '0 10px' }} />
-      </div>
-      <Nav>
-        <Link to="/">Home</Link>
-        <Link to="/contact">Contact</Link>
-      </Nav>
-      <div>
-        <p>© Crowd Dynamics 2023, All Rights Reserved</p>
-      </div>
-    </Footer>
-  </Container>
-);
+  useEffect(() => {
+    fetch('/api/stats')
+      .then(response => response.json())
+      .then(data => setStats(data))
+      .catch(error => console.error('Error fetching stats:', error));
+  }, []);
+
+  return (
+    <Container>
+      <Header>
+        <Logo src={HomeLogo} alt="Home Logo" />
+        <CenterNav>
+          <Link to="/">Crowd Dynamics</Link>
+        </CenterNav>
+        <Nav>
+          <ContactButton to="/contact">Contact Us</ContactButton>
+        </Nav>
+      </Header>
+      <Main>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Section>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div>
+                      <h1>Welcome to Crowd Dynamics</h1>
+                      <p>
+                        Discover real-time insights into crowd movements and interactions
+                        using advanced IoT and sensor technology.
+                      </p>
+                    </div>
+                    <img src={HomeCrowd} alt="Crowd" style={{ width: '20%' }} />
+                  </div>
+                </Section>
+                <Section>
+                  <h2>Live Data Stats</h2>
+                  <LiveGrid>
+                    <Frame>
+                      <VideoStream />
+                    </Frame>
+                    <Frame>
+                      <h3>Heatmap (Crowd density)</h3>
+                      <p>Visualize crowd density and movement patterns with heatmaps.</p>
+                    </Frame>
+                  </LiveGrid>
+                </Section>
+                <StatsSection>
+                  <h2>Statistics</h2>
+                  <StatsTable>
+                    <Frame>
+                      <h3>Head Count</h3>
+                      <p>{stats.totalPeople ?? 'Loading...'}</p>
+                    </Frame>
+                    <Frame>
+                      <h3>Head Count Chart</h3>
+                      <p>Chart of headcount over time.</p>
+                    </Frame>
+                    <Frame>
+                      <h3>Compliance</h3>
+                      <p>Percentage of people in compliance.</p>
+                    </Frame>
+                    <Frame>
+                      <h3>Compliance Chart</h3>
+                      <p>Chart of compliance over time.</p>
+                    </Frame>
+                    <Frame>
+                      <h3>Social Distance</h3>
+                      <p>Average meter of the shortest distance.</p>
+                    </Frame>
+                    <Frame>
+                      <h3>Social Distance Chart</h3>
+                      <p>Chart of social distance over time.</p>
+                    </Frame>
+                  </StatsTable>
+                </StatsSection>
+                <Section>
+                  <h2>Key Features</h2>
+                  <Grid>
+                    <div>
+                      <FeatureLogo src={RealTimeLogo} alt="Real-Time Tracking" />
+                      <h3>Real-Time Tracking</h3>
+                      <p>Monitor crowd movements and interactions in real-time.</p>
+                    </div>
+                    <div>
+                      <FeatureLogo src={IoTDeviceLogo} alt="Advanced IoT Devices" />
+                      <h3>Advanced IoT Devices</h3>
+                      <p>Utilize cutting-edge wearable technology for accurate data collection.</p>
+                    </div>
+                    <div>
+                      <FeatureLogo src={ComputerVisionLogo} alt="Computer Vision" />
+                      <h3>Computer Vision</h3>
+                      <p>Employ computer vision to analyze and interpret video streams.</p>
+                    </div>
+                    <div>
+                      <FeatureLogo src={PredictModelLogo} alt="Predictive Modeling" />
+                      <h3>Predictive Modeling</h3>
+                      <p>Use predictive analytics to forecast crowd behavior.</p>
+                    </div>
+                    <div>
+                      <FeatureLogo src={HeatmapLogo} alt="Heatmaps" />
+                      <h3>Heatmaps</h3>
+                      <p>Visualize crowd density and movement patterns with heatmaps.</p>
+                    </div>
+                    <div>
+                      <FeatureLogo src={InteractiveLogo} alt="Interaction Insights" />
+                      <h3>Interaction Insights</h3>
+                      <p>Gain insights into how people interact within the crowd.</p>
+                    </div>
+                  </Grid>
+                </Section>
+                <Section>
+                  <h2>Meet our team</h2>
+                  <TeamGrid>
+                    <TeamMember>
+                      <img src={PJohnDoe} alt="John Doe" />
+                      <h3>Vincent Tran</h3>
+                      <p>Project Co-Leader</p>
+                    </TeamMember>
+                    <TeamMember>
+                      <img src={PJaneSmith} alt="Jane Smith" />
+                      <h3>Shrice Nguyen</h3>
+                      <p>Team Member</p>
+                    </TeamMember>
+                    <TeamMember>
+                      <img src={PAliceJohnson} alt="Alice Johnson" />
+                      <h3>Mei Hei Chan</h3>
+                      <p>Team Member</p>
+                    </TeamMember>
+                    <TeamMember>
+                      <img src={PRobertDown} alt="Robert Brown" />
+                      <h3>Hishoban K.</h3>
+                      <p>Team Member</p>
+                    </TeamMember>
+                    <TeamMember>
+                      <img src={PEmilyDavis} alt="Emily Davis" />
+                      <h3>Nicholas K.</h3>
+                      <p>Project Manager</p>
+                    </TeamMember>
+                  </TeamGrid>
+                </Section>
+                <Section>
+                  <h2>Get in Touch</h2>
+                  <Grid>
+                    <div>
+                      <img src={OpenHours} alt="Office Hours" />
+                      <h3>Office Hours</h3>
+                      <p>Monday-Friday 8:00 am to 5:00 pm</p>
+                    </div>
+                    <div>
+                      <img src={Location} alt="Our Address" />
+                      <h3>Our Address</h3>
+                      <p>221 Burwood Highway, Burwood, Victoria 3125</p>
+                    </div>
+                    <div>
+                      <img src={Call} alt="Contact Us" />
+                      <h3>Contact Us</h3>
+                      <p>+61 3 9244 6333</p>
+                    </div>
+                  </Grid>
+                </Section>
+              </>
+            }
+          />
+        </Routes>
+      </Main>
+      <Footer>
+        <div>
+          <img src={SpaceXLogo} alt="Twitter" style={{ width: '30px', margin: '0 10px' }} />
+          <img src={FBLogo} alt="Facebook" style={{ width: '30px', margin: '0 10px' }} />
+          <img src={IGLogo} alt="Instagram" style={{ width: '30px', margin: '0 10px' }} />
+          <img src={GitHubLogo} alt="GitHub" style={{ width: '30px', margin: '0 10px' }} />
+        </div>
+        <Nav>
+          <Link to="/">Home</Link>
+          <Link to="/contact">Contact</Link>
+        </Nav>
+        <div>
+          <p>© Crowd Dynamics 2023, All Rights Reserved</p>
+        </div>
+      </Footer>
+    </Container>
+  );
+};
 
 export default App;
