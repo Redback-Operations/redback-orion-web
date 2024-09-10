@@ -126,18 +126,10 @@ The data is stored in MongoDB as records with the following fields:
 2. Navigate to the backend folder: cd backend.
 3. Install the required Python packages:
 
-bash
-
-Copy code
-
 pip install -r requirements.txt
 
 1. Make sure the MongoDB connection string is correct in database.py.
 2. Run the Flask backend:
-
-bash
-
-Copy code
 
 python app.py
 
@@ -146,17 +138,9 @@ python app.py
 1. Navigate to the frontend folder: cd frontend.
 2. Install the required Node.js packages:
 
-bash
-
-Copy code
-
 npm install
 
 1. Run the frontend:
-
-bash
-
-Copy code
 
 npm start
 
