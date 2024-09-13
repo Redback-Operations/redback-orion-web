@@ -8,6 +8,9 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const backendUrl = 'http://localhost:8000'; // Backend URL
 
+// Define the monitored area as 100 square meters
+const MONITORED_AREA = 100;
+
 // Define a type for the data items
 type DataItem = {
     time?: string;  // time for last hour data
@@ -21,12 +24,19 @@ const Dashboard = () => {
     const [lastHourData, setLastHourData] = useState<DataItem[]>([]);
     const [last30MinutesData, setLast30MinutesData] = useState<DataItem[]>([]);
 
+    // Calculate density as people per 100 square meters,
+    const calculateDensity = (count: number) => {
+        return Math.round(count / (MONITORED_AREA / 100));
+    };
+
     // Function to fetch live people count
     const fetchLivePeopleCount = async () => {
         try {
             const response = await fetch(`${backendUrl}/api/liveCount`);
             const result = await response.json();
+            const count = result.livePeopleCount;
             setLivePeopleCount(result.livePeopleCount);
+            setDensity(calculateDensity(count)); // Update density
         } catch (error) {
             console.error('Error fetching live people count:', error);
         }
@@ -138,10 +148,10 @@ const Dashboard = () => {
                 </div>
 
                 {/* Density (Placeholder calculation for now) */}
-                <div className="dashboard-item">
+            <div className="dashboard-item">
                     <h2>Density</h2>
-                    <p>{density} people per sq meter</p>
-                </div>
+                    <p>{density} people per 100 sq meters</p>
+            </div>
 
                 {/* Last Hour People Count Chart */}
                 <div className="dashboard-item-chart">
