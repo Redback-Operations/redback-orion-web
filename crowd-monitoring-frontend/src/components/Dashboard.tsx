@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import './Dashboard.css'; // Import the CSS file for styling
@@ -23,6 +23,7 @@ const Dashboard = () => {
     const [density, setDensity] = useState(0); // Placeholder for density calculation
     const [lastHourData, setLastHourData] = useState<DataItem[]>([]);
     const [last30MinutesData, setLast30MinutesData] = useState<DataItem[]>([]);
+    const videoRef = useRef<HTMLVideoElement | null>(null);
 
     // Calculate density as people per 100 square meters,
     const calculateDensity = (count: number) => {
@@ -63,6 +64,18 @@ const Dashboard = () => {
             console.error('Error fetching last 30 minutes data:', error);
         }
     };
+
+    // Set up video stream
+    useEffect(() => {
+
+        const videoElement = videoRef.current;
+        if (videoElement) {
+            videoElement.src = `${backendUrl}/LiveTracking/videoFeed`;
+            videoElement.onloadedmetadata = () => {
+                videoElement.play().catch((e: any) => console.error("Error playing video:", e));
+            };
+        }
+    }, []);
 
     // Auto-refresh live people count every second
     useEffect(() => {
