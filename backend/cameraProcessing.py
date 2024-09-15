@@ -5,6 +5,7 @@ from collections import defaultdict
 from utils import calculateHomography, transformPoints
 from database import Database
 from floorReplica import floorReplica
+from config import Config
 import time as time_module
  
 class CameraProcessor:
@@ -26,6 +27,8 @@ class CameraProcessor:
         self.lastRecorded = 0
         self.currentFrameId = 0
         self.livePeopleCount = 0  # Initialize live people count
+        self.rtspUrl = Config.CAMERA_URL
+        self.cap = cv2.VideoCapture(self.rtspUrl)
  
     # Function to calculate the homography matrix
     def calculateHomography(self):
