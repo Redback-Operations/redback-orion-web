@@ -1,4 +1,5 @@
 import logging
+from unittest import result
 from flask import Flask, jsonify, Response, stream_with_context, request # type: ignore
 from flask_cors import CORS # type: ignore
 from cameraProcessing import CameraProcessor
@@ -34,11 +35,13 @@ def getLastHourData():
     try:
             data = db.getLastHourData()
             processed_data = [{
-                "time": f'{item["_id"]["hour"]}:{item["_id"]["minute"]}', 
+                "time": f'{item["_id"]["hour"]:02d}:{item["_id"]["interval"]:02d}', 
                 "count": round(item["avgCount"])
             } for item in data]
-            logger.info(f"Retrieved last hour data: {len(processed_data)} entries")
-            return jsonify(processed_data)
+            return jsonify({
+                "last hour data": processed_data,
+                "trend": result['trend']
+        })
     except Exception as e:
             logger.error(f"Error getting last hour data: {str(e)}")
             return jsonify({"error": "Failed to get last hour data"}), 500

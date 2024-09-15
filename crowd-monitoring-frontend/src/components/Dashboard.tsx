@@ -134,13 +134,20 @@ const Dashboard = () => {
         maintainAspectRatio: false,
         scales: {
             y: {
+                beginAtZero: true,
                 ticks: {
                     callback: function (value: any) {
                         return Number.isInteger(value) ? value : null;
                     },
-                    beginAtZero: true,
                 },
             },
+
+            x: {
+                ticks: {
+                    maxRotation: 45,
+                    minRotation: 45
+                }
+            }
         },
     };
 
