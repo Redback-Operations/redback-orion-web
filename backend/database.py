@@ -149,6 +149,20 @@ class Database:
             if abs(item['avgCount'] - avg) > threshold * std_dev:
                 anomalies.append((item['_id']['minute'], item['avgCount']))
         return anomalies
+    
+    def calculateOccupancyRate(self, current_count, max_capacity=100):
+        return min(current_count / max_capacity * 100, 100)
+
+    def getLiveOccupancyData(self):
+        latest_record = self.collection.find_one(sort=[("timestamp", -1)])
+        if latest_record:
+            current_count = latest_record['peopleCount']
+            occupancy_rate = self.calculateOccupancyRate(current_count)
+            return {
+                "currentCount": current_count,
+                "occupancyRate": round(occupancy_rate, 2)
+            }
+        return None
 
     def close(self):
         self.client.close()

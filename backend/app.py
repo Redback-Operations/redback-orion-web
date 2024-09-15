@@ -25,7 +25,13 @@ def handle_exception(e):
 def getLivePeopleCount():
     try:
             count = cameraProcessor.livePeopleCount  # Fetch live count from the current frame
-            return jsonify({"livePeopleCount": count})
+            rolling_avg = cameraProcessor.rolling_average
+            prediction = cameraProcessor.future_prediction
+            return jsonify({
+            "livePeopleCount": count,
+            "rollingAverage": round(rolling_avg, 2),
+            "futurePrediction": round(prediction, 2)
+        })
     except Exception as e:
             logger.error(f"Error getting live count: {str(e)}")
             return jsonify({"error": "Failed to get live count"}), 500
@@ -50,16 +56,31 @@ def getLastHourData():
 @app.route("/api/last_30_minutes_data", methods=["GET"])
 def getLast30MinutesData():
     try:
-        data = db.getLast30MinutesData()
+        data, moving_average, anomalies = db.getLast30MinutesData()
         processed_data = [{
             "time": f'{item["_id"]["minute"]} min',
             "count": round(item["avgCount"])
         } for item in data]
-        logger.info(f"Retrieved last 30 minutes data: {len(processed_data)} entries")
-        return jsonify(processed_data)
+        return jsonify({
+            "data": processed_data,
+            "movingAverage": [round(avg, 2) for avg in moving_average],
+            "anomalies": anomalies
+        })
     except Exception as e:
         logger.error(f"Error getting last 30 minutes data: {str(e)}")
         return jsonify({"error": "Failed to get last 30 minutes data"}), 500
+    
+@app.route("/api/occupancy", methods=["GET"])
+def getOccupancyRate():
+    try:
+        occupancy_data = db.getLiveOccupancyData()
+        if occupancy_data:
+            return jsonify(occupancy_data)
+        else:
+            return jsonify({"error": "No data available"}), 404
+    except Exception as e:
+        logger.error(f"Error getting occupancy rate: {str(e)}")
+        return jsonify({"error": "Failed to get occupancy rate"}), 500
 
 
 @app.route("/LiveTracking/videoFeed", methods=["GET"])
