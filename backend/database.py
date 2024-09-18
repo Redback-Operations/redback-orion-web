@@ -11,7 +11,7 @@ class Database:
         self.collection = self.db["Crowd"]
         self.lastRecorded = time.time()
 
-    def insertRecord(self, count, frameId=None, positions=None):
+    def insertRecord(self, count, frameId=None):
         currentTime = datetime.now()
         currentTimestamp = time.time()
 
@@ -19,8 +19,7 @@ class Database:
             record = {
                 "frameId": frameId,
                 "peopleCount": count,
-                "timestamp": currentTime.strftime("%d-%m-%Y %H:%M:%S"),
-                "positions": positions  # a list of [x, y] coordinates for the heatmap
+                "timestamp": currentTime.strftime("%d-%m-%Y %H:%M:%S")
             }
             try:
                 self.collection.insert_one(record)
@@ -164,19 +163,6 @@ class Database:
                 "occupancyRate": round(occupancy_rate, 2)
             }
         return None
-    
-    def get_heatmap_data(self, grid_size=(10, 10)):
-        recent_data = self.collection.find().sort("timestamp", -1).limit(100)
-        
-        heatmap = np.zeros(grid_size)
-        for data in recent_data:
-            if 'positions' in data:
-                for x, y in data['positions']:
-                    x_bin = min(int(x * grid_size[0]), grid_size[0] - 1)
-                    y_bin = min(int(y * grid_size[1]), grid_size[1] - 1)
-                    heatmap[y_bin, x_bin] += 1
-        
-        return heatmap.tolist()
 
     def close(self):
         self.client.close()

@@ -32,8 +32,6 @@ class CameraProcessor:
         self.cap = cv2.VideoCapture(self.rtspUrl)
         self.rolling_counts = []
         self.max_rolling_window = 10
-        self.rolling_average = 0
-        self.future_prediction = 0
  
     # Function to calculate the homography matrix
     def calculateHomography(self):
@@ -47,7 +45,6 @@ class CameraProcessor:
             annotatedFrame = frame.copy()
             floorAnnotatedFrame = self.floorImage.copy()
             totalPeople = 0
-            positions = []
  
             if results[0].boxes is not None and hasattr(results[0].boxes, 'id'):
                 boxes = results[0].boxes.xywh.cpu().numpy()
@@ -77,11 +74,6 @@ class CameraProcessor:
                     cv2.rectangle(annotatedFrame, (int(x - w/2), int(y - h/2)), (int(x + w/2), int(y + h/2)), (0, 255, 0), 2)
                     cv2.putText(annotatedFrame, f"ID: {int(trackID)}", (int(x - w/2), int(y - h/2) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
                     totalPeople += 1
-
-                    # Normalize coordinates to 0-1 range for heatmap
-                    x_norm = x / frame.shape[1]
-                    y_norm = y / frame.shape[0]
-                    positions.append([x_norm, y_norm])
             else:
                 print("No human detections or IDs available.")
         
@@ -94,7 +86,7 @@ class CameraProcessor:
         self.livePeopleCount = totalPeople  # Update live people count
         self.updateRollingAverage(totalPeople)
         self.predictFutureCrowd()
-        self.db.insertRecord(totalPeople, self.currentFrameId, positions)
+        self.db.insertRecord(totalPeople, self.currentFrameId)
         
         return annotatedFrame, floorAnnotatedFrame
     
