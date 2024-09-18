@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import './Dashboard.css'; // Import the CSS file for styling
+const HeatMap = require('react-heatmap-grid').default;
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -28,6 +29,7 @@ const Dashboard = () => {
     const [occupancyRate, setOccupancyRate] = useState(0);
     const [anomalies, setAnomalies] = useState<[number, number][]>([]);
     const videoRef = useRef<HTMLVideoElement | null>(null);
+    const [heatmapData, setHeatmapData] = useState<number[][]>([]);
 
     // Calculate density as people per 100 square meters,
     const calculateDensity = (count: number) => {
@@ -80,6 +82,16 @@ const Dashboard = () => {
         }
     };
 
+    const fetchHeatmapData = async () => {
+        try {
+          const response = await fetch(`${backendUrl}/api/heatmap`);
+          const data = await response.json();
+          setHeatmapData(data.heatmap);
+        } catch (error) {
+          console.error('Error fetching heatmap data:', error);
+        }
+      };
+
     // Set up video stream
     useEffect(() => {
 
@@ -126,6 +138,12 @@ const Dashboard = () => {
             fetchOccupancyRate();
         }, 1000);
 
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        fetchHeatmapData();
+        const interval = setInterval(fetchHeatmapData, 5000); // Update every 5 seconds
         return () => clearInterval(interval);
     }, []);
 
@@ -230,6 +248,25 @@ const Dashboard = () => {
                 <h2>Rolling Average</h2>
                 <p>{rollingAverage.toFixed(2)} people</p>
             </div>
+
+            <div className="dashboard-item-chart">
+                <h2>Crowd Density Heatmap</h2>
+                {heatmapData.length > 0 ? (
+                    <HeatMap
+                    xLabels={new Array(10).fill(0).map((_, i) => `${i}`)}
+                    yLabels={new Array(10).fill(0).map((_, i) => `${i}`)}
+                    data={heatmapData}
+                    cellStyle={(background: string, value: number, min: number, max: number) => ({
+                        background: `rgb(0, 0, 255, ${1 - (max - value) / (max - min)})`,
+                        fontSize: "11px",
+                    })}
+                    cellRender={(value: number) => value !== null && value !== undefined ? value.toFixed(2) : ''}
+                    />
+                ) : (
+                    <p>Loading heatmap data...</p>
+                )}
+            </div>
+
             </div>
         </div>
     );

@@ -11,7 +11,7 @@ class Database:
         self.collection = self.db["Crowd"]
         self.lastRecorded = time.time()
 
-    def insertRecord(self, count, frameId=None):
+    def insertRecord(self, count, frameId=None, positions=None):
         currentTime = datetime.now()
         currentTimestamp = time.time()
 
@@ -19,11 +19,12 @@ class Database:
             record = {
                 "frameId": frameId,
                 "peopleCount": count,
-                "timestamp": currentTime.strftime("%d-%m-%Y %H:%M:%S")
+                "timestamp": currentTime.strftime("%d-%m-%Y %H:%M:%S"),
+                "positions": positions
             }
             try:
                 self.collection.insert_one(record)
-                print(f"Recorded: Frame {frameId}, Time {currentTime}, People {count}")
+                print(f"Recorded: Frame {frameId}, Time {currentTime}, People {count}, Positions: {len(positions)}")
             except Exception as e:
                 print(f"Failed to insert record into database: {e}")
             self.lastRecorded = currentTimestamp
@@ -68,6 +69,19 @@ class Database:
             'trend': trend
         }
     
+    def get_heatmap_data(self, grid_size=(10, 10)):
+        recent_data = self.collection.find().sort("timestamp", -1).limit(100)
+        
+        heatmap = np.zeros(grid_size)
+        for data in recent_data:
+            if 'positions' in data and data['positions'] is not None:
+                for x, y in data['positions']:
+                    x_bin = min(int(x * grid_size[0]), grid_size[0] - 1)
+                    y_bin = min(int(y * grid_size[1]), grid_size[1] - 1)
+                    heatmap[y_bin, x_bin] += 1
+
+        return heatmap.tolist()
+
     def interpolateMissingIntervals(self, data):
         full_data = []
         for i in range(4):  # 4 15-minute intervals in an hour

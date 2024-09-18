@@ -81,6 +81,15 @@ def getOccupancyRate():
     except Exception as e:
         logger.error(f"Error getting occupancy rate: {str(e)}")
         return jsonify({"error": "Failed to get occupancy rate"}), 500
+    
+@app.route("/api/heatmap", methods=["GET"])
+def get_heatmap():
+    try:
+        heatmap_data = db.get_heatmap_data()
+        return jsonify({"heatmap": heatmap_data})
+    except Exception as e:
+        logger.error(f"Error getting heatmap data: {str(e)}")
+        return jsonify({"error": "Failed to get heatmap data"}), 500
 
 
 @app.route("/LiveTracking/videoFeed", methods=["GET"])
