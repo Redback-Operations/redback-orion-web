@@ -100,6 +100,15 @@ def annotatedVideoFeed():
     except Exception as e:
         logger.error(f"Error in annotated video feed: {str(e)}")
         return jsonify({"error": "Failed to stream annotated video feed"}), 500
+    
+@app.route("/api/heatmap", methods=["GET"])
+def get_heatmap():
+    try:
+        heatmap_data = db.get_heatmap_data()
+        return jsonify({"heatmap": heatmap_data})
+    except Exception as e:
+        logger.error(f"Error getting heatmap data: {str(e)}")
+        return jsonify({"error": "Failed to get heatmap data"}), 500
 
 if __name__ == "__main__":
     logger.info("Starting the Flask application")
