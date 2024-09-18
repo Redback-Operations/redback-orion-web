@@ -5,6 +5,8 @@ from collections import defaultdict
 from utils import calculateHomography, transformPoints
 from database import Database
 from floorReplica import floorReplica
+from config import Config
+from scipy.stats import linregress
 import time as time_module
  
 class CameraProcessor:
@@ -26,6 +28,10 @@ class CameraProcessor:
         self.lastRecorded = 0
         self.currentFrameId = 0
         self.livePeopleCount = 0  # Initialize live people count
+        self.rtspUrl = Config.CAMERA_URL
+        self.cap = cv2.VideoCapture(self.rtspUrl)
+        self.rolling_counts = []
+        self.max_rolling_window = 10
  
     # Function to calculate the homography matrix
     def calculateHomography(self):
@@ -78,9 +84,24 @@ class CameraProcessor:
     
         self.currentFrameId += 1
         self.livePeopleCount = totalPeople  # Update live people count
+        self.updateRollingAverage(totalPeople)
+        self.predictFutureCrowd()
         self.db.insertRecord(totalPeople, self.currentFrameId)
         
         return annotatedFrame, floorAnnotatedFrame
+    
+    def updateRollingAverage(self, count):
+        self.rolling_counts.append(count)
+        if len(self.rolling_counts) > self.max_rolling_window:
+            self.rolling_counts.pop(0)
+        self.rolling_average = sum(self.rolling_counts) / len(self.rolling_counts)
+
+    def predictFutureCrowd(self):
+        if len(self.rolling_counts) >= 5:  # Minimum data points for prediction
+            x = np.arange(len(self.rolling_counts))
+            y = np.array(self.rolling_counts)
+            slope, intercept, _, _, _ = linregress(x, y)
+            self.future_prediction = slope * (len(self.rolling_counts) + 5) + intercept  # Predict 5 time units ahead
  
     def run(self):
         while True:

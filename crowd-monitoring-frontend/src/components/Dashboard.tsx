@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import './Dashboard.css'; // Import the CSS file for styling
@@ -23,6 +23,11 @@ const Dashboard = () => {
     const [density, setDensity] = useState(0); // Placeholder for density calculation
     const [lastHourData, setLastHourData] = useState<DataItem[]>([]);
     const [last30MinutesData, setLast30MinutesData] = useState<DataItem[]>([]);
+    const [rollingAverage, setRollingAverage] = useState(0);
+    const [futurePrediction, setFuturePrediction] = useState(0);
+    const [occupancyRate, setOccupancyRate] = useState(0);
+    const [anomalies, setAnomalies] = useState<[number, number][]>([]);
+    const videoRef = useRef<HTMLVideoElement | null>(null);
 
     // Calculate density as people per 100 square meters,
     const calculateDensity = (count: number) => {
@@ -34,11 +39,22 @@ const Dashboard = () => {
         try {
             const response = await fetch(`${backendUrl}/api/liveCount`);
             const result = await response.json();
-            const count = result.livePeopleCount;
             setLivePeopleCount(result.livePeopleCount);
-            setDensity(calculateDensity(count)); // Update density
+            setRollingAverage(result.rollingAverage);
+            setFuturePrediction(result.futurePrediction);
+            setDensity(calculateDensity(result.livePeopleCount)); // Update density
         } catch (error) {
             console.error('Error fetching live people count:', error);
+        }
+    };
+
+    const fetchOccupancyRate = async () => {
+        try {
+            const response = await fetch(`${backendUrl}/api/occupancy`);
+            const result = await response.json();
+            setOccupancyRate(result.occupancyRate);
+        } catch (error) {
+            console.error('Error fetching occupancy rate:', error);
         }
     };
 
@@ -64,6 +80,18 @@ const Dashboard = () => {
         }
     };
 
+    // Set up video stream
+    useEffect(() => {
+
+        const videoElement = videoRef.current;
+        if (videoElement) {
+            videoElement.src = `${backendUrl}/LiveTracking/videoFeed`;
+            videoElement.onloadedmetadata = () => {
+                videoElement.play().catch((e: any) => console.error("Error playing video:", e));
+            };
+        }
+    }, []);
+
     // Auto-refresh live people count every second
     useEffect(() => {
         fetchLivePeopleCount(); // Fetch initial count
@@ -86,6 +114,19 @@ const Dashboard = () => {
         }, 300000); // 5 minutes (300,000 ms)
 
         return () => clearInterval(interval); // Cleanup interval on unmount
+    }, []);
+
+    // Update useEffect to include fetch functions
+    useEffect(() => {
+        fetchLivePeopleCount();
+        fetchOccupancyRate();
+
+        const interval = setInterval(() => {
+            fetchLivePeopleCount();
+            fetchOccupancyRate();
+        }, 1000);
+
+        return () => clearInterval(interval);
     }, []);
 
     // Prepare chart data for last hour people count (15-minute intervals)
@@ -121,13 +162,20 @@ const Dashboard = () => {
         maintainAspectRatio: false,
         scales: {
             y: {
+                beginAtZero: true,
                 ticks: {
                     callback: function (value: any) {
                         return Number.isInteger(value) ? value : null;
                     },
-                    beginAtZero: true,
                 },
             },
+
+            x: {
+                ticks: {
+                    maxRotation: 45,
+                    minRotation: 45
+                }
+            }
         },
     };
 
@@ -147,23 +195,41 @@ const Dashboard = () => {
                     <p>{livePeopleCount}</p>
                 </div>
 
-                {/* Density (Placeholder calculation for now) */}
+            {/* Future Prediction of Live Count */}
+            <div className="dashboard-item">
+                <h2>Future Prediction of Live People Count</h2>
+                <p>{futurePrediction.toFixed(2)} people</p>
+            </div>
+
+            {/* Density */}
             <div className="dashboard-item">
                     <h2>Density</h2>
                     <p>{density} people per 100 sq meters</p>
             </div>
 
-                {/* Last Hour People Count Chart */}
-                <div className="dashboard-item-chart">
-                    <h2>Last Hour People Count (15-min Intervals)</h2>
-                    <Line data={lastHourChartData} options={chartOptions} />
-                </div>
+            {/* Occupancy Rate of People in the Screen */}
+            <div className="dashboard-item">
+                <h2>Occupancy Rate</h2>
+                <p>{occupancyRate.toFixed(2)}%</p>
+            </div>
 
-                {/* Last 30 Minutes People Count Chart */}
-                <div className="dashboard-item-chart">
-                    <h2>Last 30 Minutes People Count (1-min Intervals)</h2>
-                    <Line data={last30MinutesChartData} options={chartOptions} />
-                </div>
+            {/* Last Hour People Count Chart */}
+            <div className="dashboard-item-chart">
+                <h2>Last Hour People Count (15-min Intervals)</h2>
+                <Line data={lastHourChartData} options={chartOptions} />
+            </div>
+
+            {/* Last 30 Minutes People Count Chart */}
+            <div className="dashboard-item-chart">
+                <h2>Last 30 Minutes People Count (1-min Intervals)</h2>
+                <Line data={last30MinutesChartData} options={chartOptions} />
+            </div>
+
+            {/* Rolling/Moving Average */}
+            <div className="dashboard-item">
+                <h2>Rolling Average</h2>
+                <p>{rollingAverage.toFixed(2)} people</p>
+            </div>
             </div>
         </div>
     );
