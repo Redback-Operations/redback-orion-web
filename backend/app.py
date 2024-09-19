@@ -15,6 +15,7 @@ db = Database()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Global error handler
 @app.errorhandler(Exception)
 def handle_exception(e):
     logger.error(f"Unhandled exception: {str(e)}", exc_info=True)
@@ -36,6 +37,7 @@ def getLivePeopleCount():
             logger.error(f"Error getting live count: {str(e)}")
             return jsonify({"error": "Failed to get live count"}), 500
 
+# Get last hour data
 @app.route("/api/last_hour_data", methods=["GET"])
 def getLastHourData():
     try:
@@ -53,6 +55,7 @@ def getLastHourData():
             return jsonify({"error": "Failed to get last hour data"}), 500
         
 
+# Get last 30 minutes data
 @app.route("/api/last_30_minutes_data", methods=["GET"])
 def getLast30MinutesData():
     try:
@@ -69,7 +72,8 @@ def getLast30MinutesData():
     except Exception as e:
         logger.error(f"Error getting last 30 minutes data: {str(e)}")
         return jsonify({"error": "Failed to get last 30 minutes data"}), 500
-    
+
+# Get occupancy rate    
 @app.route("/api/occupancy", methods=["GET"])
 def getOccupancyRate():
     try:
@@ -82,6 +86,7 @@ def getOccupancyRate():
         logger.error(f"Error getting occupancy rate: {str(e)}")
         return jsonify({"error": "Failed to get occupancy rate"}), 500
     
+# Get heatmap data
 @app.route("/api/heatmap", methods=["GET"])
 def get_heatmap():
     try:
@@ -92,6 +97,7 @@ def get_heatmap():
         return jsonify({"error": "Failed to get heatmap data"}), 500
 
 
+# Get raw video feed
 @app.route("/LiveTracking/videoFeed", methods=["GET"])
 def videoFeed():
     try:
@@ -101,6 +107,7 @@ def videoFeed():
         logger.error(f"Error in video feed: {str(e)}")
         return jsonify({"error": "Failed to stream video feed"}), 500
 
+#Get annotated video feed
 @app.route("/LiveTracking/annotatedVideoFeed", methods=["GET"])
 def annotatedVideoFeed():
     try:

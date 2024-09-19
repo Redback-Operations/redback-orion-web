@@ -41,6 +41,7 @@ class CameraProcessor:
  
     def processFrame(self, frame):
         try:
+            # Perform object detection using YOLO  
             results = self.model.track(frame, persist=True, show=False, imgsz=1280, verbose=False)
             annotatedFrame = frame.copy()
             floorAnnotatedFrame = self.floorImage.copy()
@@ -48,14 +49,18 @@ class CameraProcessor:
             positions = []
  
             if results[0].boxes is not None and hasattr(results[0].boxes, 'id'):
+                # Extract bounding boxes, track IDs, and classes from detection results
                 boxes = results[0].boxes.xywh.cpu().numpy()
                 trackIDs = results[0].boxes.id.int().cpu().numpy()
                 classes = results[0].boxes.cls.cpu().numpy()
                 
+                # Filter for human detections
                 human_indices = classes == 0
                 human_boxes = boxes[human_indices]
                 human_trackIDs = trackIDs[human_indices]
                 
+                # Process each detected person
+                # Draw movement history on floor annotation
                 for trackID in np.unique(human_trackIDs):
                     history = self.trackHistory[trackID]
                     if len(history) > 1:
@@ -72,6 +77,7 @@ class CameraProcessor:
                     if len(self.trackHistory[trackID]) > 50:
                         self.trackHistory[trackID].pop(0)
 
+                    # Calculate normalized positions for heatmap
                     norm_x = x / frame.shape[1]
                     norm_y = y / frame.shape[0]
                     positions.append((norm_x, norm_y)) 
@@ -101,6 +107,7 @@ class CameraProcessor:
             self.rolling_counts.pop(0)
         self.rolling_average = sum(self.rolling_counts) / len(self.rolling_counts)
 
+    # Predict future crowd size using linear regression
     def predictFutureCrowd(self):
         if len(self.rolling_counts) >= 5:  # Minimum data points for prediction
             x = np.arange(len(self.rolling_counts))

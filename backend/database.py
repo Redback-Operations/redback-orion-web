@@ -29,6 +29,7 @@ class Database:
                 print(f"Failed to insert record into database: {e}")
             self.lastRecorded = currentTimestamp
 
+    # Retrieve and process data from the last hour
     def getLastHourData(self):
         one_hour_ago = datetime.now() - timedelta(hours=1)
         pipeline = [
@@ -69,6 +70,7 @@ class Database:
             'trend': trend
         }
     
+    # Generate heatmap data based on recent positions
     def get_heatmap_data(self, grid_size=(10, 10)):
         recent_data = self.collection.find().sort("timestamp", -1).limit(100)
         
@@ -82,6 +84,7 @@ class Database:
 
         return heatmap.tolist()
 
+    # Fill in missing intervals with interpolated data
     def interpolateMissingIntervals(self, data):
         full_data = []
         for i in range(4):  # 4 15-minute intervals in an hour
@@ -96,6 +99,7 @@ class Database:
                 full_data.append({'_id': {'interval': i * 15, 'hour': data[0]['_id']['hour'] if data else 0}, 'avgCount': interpolated_count})
         return full_data
 
+    # Calculate the trend of people count over time
     def calculateTrend(self, data):
         counts = [item['avgCount'] for item in data]
         x = np.arange(len(counts))
@@ -151,10 +155,12 @@ class Database:
         
         return result, moving_average, anomalies
 
+    # Calculate moving average of people count
     def calculateMovingAverage(self, data, window=5):
         counts = [item['avgCount'] for item in data]
         return [sum(counts[max(0, i-window+1):i+1]) / min(i+1, window) for i in range(len(counts))]
 
+    # Detect anomalies in people count
     def detectAnomalies(self, data, moving_average, threshold=2):
         anomalies = []
         counts = [item['avgCount'] for item in data]
@@ -164,9 +170,11 @@ class Database:
                 anomalies.append((item['_id']['minute'], item['avgCount']))
         return anomalies
     
+    # Calculate occupancy rate as a percentage of max capacity of screen
     def calculateOccupancyRate(self, current_count, max_capacity=100):
         return min(current_count / max_capacity * 100, 100)
 
+    # Retrieve the latest record of occupancy rate
     def getLiveOccupancyData(self):
         latest_record = self.collection.find_one(sort=[("timestamp", -1)])
         if latest_record:

@@ -50,6 +50,7 @@ const Dashboard = () => {
         }
     };
 
+    // Function to fetch occupancy rate
     const fetchOccupancyRate = async () => {
         try {
             const response = await fetch(`${backendUrl}/api/occupancy`);
@@ -82,6 +83,7 @@ const Dashboard = () => {
         }
     };
 
+    // Function to fetch heatmap data
     const fetchHeatmapData = async () => {
         try {
           const response = await fetch(`${backendUrl}/api/heatmap`);
@@ -141,6 +143,7 @@ const Dashboard = () => {
         return () => clearInterval(interval);
     }, []);
 
+    // Fetch heatmap data every 5 seconds
     useEffect(() => {
         fetchHeatmapData();
         const interval = setInterval(fetchHeatmapData, 5000); // Update every 5 seconds
