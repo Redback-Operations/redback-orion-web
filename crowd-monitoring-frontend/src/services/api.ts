@@ -1,37 +1,37 @@
 const backendUrl = 'http://localhost:8000';  // Backend URL
 
-// Fetch hourly data for the last 24 hours
-export const fetchHourlyData = async () => {
+// Fetch last hour data
+export const fetchLastHourData = async () => {
   try {
-    const response = await fetch(`${backendUrl}/api/hourly_data`);
+    const response = await fetch(`${backendUrl}/api/last_hour_data`);
     if (!response.ok) {
-      throw new Error(`Error fetching hourly data: ${response.statusText}`);
+      throw new Error(`Error fetching last hour data: ${response.statusText}`);
     }
-    const data = await response.json();
-    return data.map((item: any) => ({
+    const result = await response.json();
+    return result['last hour data'].map((item: any) => ({
       time: item.time,  // Use the 'time' field formatted by the backend
       count: Math.round(item.count)  // Use the 'count' field returned by the backend
     }));
   } catch (error) {
-    console.error('Error fetching hourly data:', error);
+    console.error('Error fetching last hour data:', error);
     return [];
   }
 };
 
-// Fetch daily data for the last 30 days
-export const fetchDailyData = async () => {
+// Fetch last 30 minutes data
+export const fetchLast30MinutesData = async () => {
   try {
-    const response = await fetch(`${backendUrl}/api/daily_data`);
+    const response = await fetch(`${backendUrl}/api/last_30_minutes_data`);
     if (!response.ok) {
-      throw new Error(`Error fetching daily data: ${response.statusText}`);
+      throw new Error(`Error fetching last 30 minutes data: ${response.statusText}`);
     }
-    const data = await response.json();
-    return data.map((item: any) => ({
-      date: item.date,  // Use the 'date' field formatted by the backend
+    const result = await response.json();
+    return result.data.map((item: any) => ({
+      minute: item.time,  // Use the 'time' field formatted by the backend
       count: Math.round(item.count)  // Use the 'count' field returned by the backend
     }));
   } catch (error) {
-    console.error('Error fetching daily data:', error);
+    console.error('Error fetching last 30 minutes data:', error);
     return [];
   }
 };
@@ -44,9 +44,13 @@ export const fetchPeopleCount = async () => {
       throw new Error(`Error fetching people count: ${response.statusText}`);
     }
     const data = await response.json();
-    return data.livePeopleCount;  // Fetch 'livePeopleCount' from the response
+    return {
+      livePeopleCount: data.livePeopleCount,
+      rollingAverage: data.rollingAverage,
+      futurePrediction: data.futurePrediction,
+    };
   } catch (error) {
     console.error('Error fetching people count:', error);
-    return 0;
+    return null;
   }
 };

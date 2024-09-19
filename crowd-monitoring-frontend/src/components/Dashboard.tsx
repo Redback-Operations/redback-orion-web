@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import './Dashboard.css'; // Import the CSS file for styling
+import VideoStream from './VideoStream'; // Import the VideoStream component
+import { ChartOptions } from 'chart.js';
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -13,8 +15,7 @@ const MONITORED_AREA = 100;
 
 // Define a type for the data items
 type DataItem = {
-    time?: string;  // time for last hour data
-    minute?: string;  // minute for last 30 minutes data
+    time?: string;  // time for last hour or last 30 minutes data
     count: number;  // count of people
 };
 
@@ -26,10 +27,8 @@ const Dashboard = () => {
     const [rollingAverage, setRollingAverage] = useState(0);
     const [futurePrediction, setFuturePrediction] = useState(0);
     const [occupancyRate, setOccupancyRate] = useState(0);
-    const [anomalies, setAnomalies] = useState<[number, number][]>([]);
-    const videoRef = useRef<HTMLVideoElement | null>(null);
 
-    // Calculate density as people per 100 square meters,
+    // Calculate density as people per 100 square meters
     const calculateDensity = (count: number) => {
         return Math.round(count / (MONITORED_AREA / 100));
     };
@@ -62,35 +61,35 @@ const Dashboard = () => {
     const fetchLastHourData = async () => {
         try {
             const response = await fetch(`${backendUrl}/api/last_hour_data`);
-            const result: DataItem[] = await response.json();
-            setLastHourData(result);
+            const result = await response.json();
+
+            if (Array.isArray(result.data)) {
+                setLastHourData(result.data);
+            } else {
+                console.error('Expected array but received:', result.data);
+                setLastHourData([]);
+            }
         } catch (error) {
             console.error('Error fetching last hour data:', error);
         }
     };
 
-    // Fetch last 30 minutes people count (1-minute intervals)
+    // Fetch last 30 minutes people count (actual time intervals)
     const fetchLast30MinutesData = async () => {
         try {
             const response = await fetch(`${backendUrl}/api/last_30_minutes_data`);
-            const result: DataItem[] = await response.json();
-            setLast30MinutesData(result);
+            const result = await response.json();
+
+            if (Array.isArray(result.data)) {
+                setLast30MinutesData(result.data);
+            } else {
+                console.error('Expected array but received:', result.data);
+                setLast30MinutesData([]);
+            }
         } catch (error) {
             console.error('Error fetching last 30 minutes data:', error);
         }
     };
-
-    // Set up video stream
-    useEffect(() => {
-
-        const videoElement = videoRef.current;
-        if (videoElement) {
-            videoElement.src = `${backendUrl}/LiveTracking/videoFeed`;
-            videoElement.onloadedmetadata = () => {
-                videoElement.play().catch((e: any) => console.error("Error playing video:", e));
-            };
-        }
-    }, []);
 
     // Auto-refresh live people count every second
     useEffect(() => {
@@ -116,48 +115,34 @@ const Dashboard = () => {
         return () => clearInterval(interval); // Cleanup interval on unmount
     }, []);
 
-    // Update useEffect to include fetch functions
-    useEffect(() => {
-        fetchLivePeopleCount();
-        fetchOccupancyRate();
-
-        const interval = setInterval(() => {
-            fetchLivePeopleCount();
-            fetchOccupancyRate();
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, []);
-
     // Prepare chart data for last hour people count (15-minute intervals)
     const lastHourChartData = {
-        labels: lastHourData.map(item => `${item.time}:00`), // X-axis labels (15-minute intervals)
+        labels: lastHourData.map(item => `${item.time || 'N/A'}`),
         datasets: [
             {
                 label: 'People Count (Last Hour, 15-min Intervals)',
-                data: lastHourData.map(item => item.count), // Y-axis data (counts)
+                data: lastHourData.map(item => item.count),
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
             },
         ],
     };
 
-    // Prepare chart data for last 30 minutes people count (1-minute intervals)
+    // Prepare chart data for last 30 minutes people count (actual time)
     const last30MinutesChartData = {
-        labels: last30MinutesData.map(item => `${item.minute} min`), // Ensure no undefined values
+        labels: last30MinutesData.map(item => `${item.time || 'N/A'}`),
         datasets: [
             {
-                label: 'People Count (Last 30 Minutes, 1-min Intervals)',
-                data: last30MinutesData.map(item => item.count), // Y-axis data (counts)
+                label: 'People Count (Last 30 Minutes, Actual Time)',
+                data: last30MinutesData.map(item => item.count),
                 borderColor: 'rgba(153, 102, 255, 1)',
                 backgroundColor: 'rgba(153, 102, 255, 0.2)',
             },
         ],
     };
-    
 
     // Chart options to display integer Y-axis values
-    const chartOptions = {
+    const chartOptions: ChartOptions<'line'> = {
         responsive: true,
         maintainAspectRatio: false,
         scales: {
@@ -169,23 +154,37 @@ const Dashboard = () => {
                     },
                 },
             },
-
             x: {
                 ticks: {
-                    maxRotation: 45,
-                    minRotation: 45
-                }
-            }
+                    maxTicksLimit: 5, // Limits the number of ticks on the x-axis
+                    maxRotation: 0,   // Prevents x-axis labels from rotating
+                    minRotation: 0,   // Sets minimum rotation
+                    align: 'center',  // Align ticks to center
+                },
+                grid: {
+                    display: false,   // Optionally hide grid lines
+                },
+            },
+        },
+        layout: {
+            padding: {
+                left: 10,
+                right: 10,
+                top: 10,
+                bottom: 30, // Increase padding for x-axis labels
+            },
+        },
+        plugins: {
+            legend: {
+                position: "top",
+            },
         },
     };
 
     return (
         <div>
             {/* Live Video */}
-            <div className="live-video-container">
-                <h2>Live Video</h2>
-                <img src={`${backendUrl}/LiveTracking/videoFeed`} alt="Live Camera Feed" className="live-video" />
-            </div>
+            <VideoStream />
 
             {/* Grid for Data */}
             <div className="dashboard-grid">
@@ -195,41 +194,41 @@ const Dashboard = () => {
                     <p>{livePeopleCount}</p>
                 </div>
 
-            {/* Future Prediction of Live Count */}
-            <div className="dashboard-item">
-                <h2>Future Prediction of Live People Count</h2>
-                <p>{futurePrediction.toFixed(2)} people</p>
-            </div>
+                {/* Future Prediction of Live Count */}
+                <div className="dashboard-item">
+                    <h2>Future Prediction of Live People Count</h2>
+                    <p>{futurePrediction.toFixed(2)} people</p>
+                </div>
 
-            {/* Density */}
-            <div className="dashboard-item">
+                {/* Density */}
+                <div className="dashboard-item">
                     <h2>Density</h2>
                     <p>{density} people per 100 sq meters</p>
-            </div>
+                </div>
 
-            {/* Occupancy Rate of People in the Screen */}
-            <div className="dashboard-item">
-                <h2>Occupancy Rate</h2>
-                <p>{occupancyRate.toFixed(2)}%</p>
-            </div>
+                {/* Occupancy Rate of People in the Screen */}
+                <div className="dashboard-item">
+                    <h2>Occupancy Rate</h2>
+                    <p>{occupancyRate.toFixed(2)}%</p>
+                </div>
 
-            {/* Last Hour People Count Chart */}
-            <div className="dashboard-item-chart">
-                <h2>Last Hour People Count (15-min Intervals)</h2>
-                <Line data={lastHourChartData} options={chartOptions} />
-            </div>
+                {/* Last Hour People Count Chart */}
+                <div className="dashboard-item-chart">
+                    <h2>Last Hour People Count (15-min Intervals)</h2>
+                    <Line data={lastHourChartData} options={chartOptions} />
+                </div>
 
-            {/* Last 30 Minutes People Count Chart */}
-            <div className="dashboard-item-chart">
-                <h2>Last 30 Minutes People Count (1-min Intervals)</h2>
-                <Line data={last30MinutesChartData} options={chartOptions} />
-            </div>
+                {/* Last 30 Minutes People Count Chart */}
+                <div className="dashboard-item-chart">
+                    <h2>Last 30 Minutes People Count (Actual Time)</h2>
+                    <Line data={last30MinutesChartData} options={chartOptions} />
+                </div>
 
-            {/* Rolling/Moving Average */}
-            <div className="dashboard-item">
-                <h2>Rolling Average</h2>
-                <p>{rollingAverage.toFixed(2)} people</p>
-            </div>
+                {/* Rolling/Moving Average */}
+                <div className="dashboard-item">
+                    <h2>Rolling Average</h2>
+                    <p>{rollingAverage.toFixed(2)} people</p>
+                </div>
             </div>
         </div>
     );

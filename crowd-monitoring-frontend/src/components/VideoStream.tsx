@@ -16,12 +16,12 @@ const VideoStream: React.FC = () => {
     <div style={{ textAlign: 'center', margin: '20px 0' }}>
       <h2>Live Camera Feed</h2>
       <img 
-        src={videoUrl} 
+        src={`${videoUrl}?key=${imageKey}`}  // Append key to refresh image
         alt="Live Camera Feed" 
         style={{ width: '100%', maxWidth: '800px', height: 'auto', border: '2px solid #333', borderRadius: '10px' }} 
         onError={(e) => {
           (e.currentTarget.src = 'path-to-placeholder-image.jpg');
-           console.error("Failed to load video feed");
+          console.error("Failed to load video feed");
         }} // Optional: Add a fallback image
       />
       <p>If the video does not load, please check the camera or backend connection.</p>

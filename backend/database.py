@@ -1,4 +1,3 @@
-from unittest import result
 from pymongo import MongoClient
 import time
 from datetime import datetime, timedelta
@@ -29,45 +28,61 @@ class Database:
             self.lastRecorded = currentTimestamp
 
     def getLastHourData(self):
-        one_hour_ago = datetime.now() - timedelta(hours=1)
-        pipeline = [
-            {"$addFields": {
-                "timestamp": {
-                    "$dateFromString": {
-                        "dateString": "$timestamp",
-                        "format": "%d-%m-%Y %H:%M:%S"
+        try:
+            # Log the current time and calculate one hour ago
+            print("Fetching data for the last hour...")
+            current_time = datetime.now()
+            one_hour_ago = current_time - timedelta(hours=1)
+            print(f"Current time: {current_time}, One hour ago: {one_hour_ago}")
+
+            # MongoDB aggregation pipeline
+            pipeline = [
+                {"$addFields": {
+                    "timestamp": {
+                        "$dateFromString": {
+                            "dateString": "$timestamp",
+                            "format": "%d-%m-%Y %H:%M:%S"
+                        }
                     }
-                }
-            }},
-            {"$match": {"timestamp": {"$gte": one_hour_ago}}},
-            {"$group": {
-                "_id": {
-                    "interval": {
-                        "$subtract": [
-                            {"$minute": "$timestamp"},
-                            {"$mod": [{"$minute": "$timestamp"}, 15]}
-                        ]
+                }},
+                {"$match": {"timestamp": {"$gte": one_hour_ago}}},  # Ensure we are fetching data from only the last hour
+                {"$group": {
+                    "_id": {
+                        "interval": {
+                            "$subtract": [
+                                {"$minute": "$timestamp"},
+                                {"$mod": [{"$minute": "$timestamp"}, 15]}
+                            ]
+                        },
+                        "hour": {"$hour": "$timestamp"}
                     },
-                    "hour": {"$hour": "$timestamp"}
-                },
-                "avgCount": {"$avg": "$peopleCount"}
-            }},
-            {"$sort": {"_id.hour": 1, "_id.interval": 1}}
+                    "avgCount": {"$avg": "$peopleCount"}
+                }},
+                {"$sort": {"_id.hour": 1, "_id.interval": 1}}
             ]
-        
-        result = list(self.collection.aggregate(pipeline))
-        
-        # Interpolate missing data
-        full_hour_data = self.interpolateMissingIntervals(result)
-        
-        # Calculate trend
-        trend = self.calculateTrend(full_hour_data)
-        
-        return {
-            'data': full_hour_data,
-            'trend': trend
-        }
-    
+
+            # Execute the aggregation pipeline and log the result
+            result = list(self.collection.aggregate(pipeline))
+            print(f"Aggregation result: {result}")
+
+            if not result:
+                return {"data": [], "trend": "No data available"}
+
+            # Interpolate missing data
+            full_hour_data = self.interpolateMissingIntervals(result)
+
+            # Calculate trend
+            trend = self.calculateTrend(full_hour_data)
+
+            return {
+                'data': full_hour_data,
+                'trend': trend
+            }
+        except Exception as e:
+            # Log the detailed error message
+            print(f"Error fetching last hour data: {e}")
+            return {"error": "Failed to get last hour data"}
+
     def interpolateMissingIntervals(self, data):
         full_data = []
         for i in range(4):  # 4 15-minute intervals in an hour
@@ -84,62 +99,62 @@ class Database:
 
     def calculateTrend(self, data):
         counts = [item['avgCount'] for item in data]
-        x = np.arange(len(counts))
-        slope, _ = np.polyfit(x, counts, 1)
-        return "Increasing" if slope > 0 else "Decreasing" if slope < 0 else "Stable"
+        if len(counts) > 1:
+            x = np.arange(len(counts))
+            slope, _ = np.polyfit(x, counts, 1)
+            return "Increasing" if slope > 0 else "Decreasing" if slope < 0 else "Stable"
+        return "No data"
 
     def getLast30MinutesData(self):
-        
-        thirty_minutes_ago = datetime.now() - timedelta(minutes=30)
-
-        # Create a list of all minutes in the last 30 minutes
-   
-        # MongoDB pipeline
-        pipeline = [
-            {"$addFields": {
-                "timestamp": {
-                    "$dateFromString": {
-                        "dateString": "$timestamp",
-                        "format": "%d-%m-%Y %H:%M:%S"
+        try:
+            thirty_minutes_ago = datetime.now() - timedelta(minutes=30)
+            pipeline = [
+                {"$addFields": {
+                    "timestamp": {
+                        "$dateFromString": {
+                            "dateString": "$timestamp",
+                            "format": "%d-%m-%Y %H:%M:%S"
+                        }
                     }
-                }
-            }},
-            {"$match": {
-                "timestamp": {
-                    "$gte": thirty_minutes_ago
-                }
-            }},
-        {"$group": {
-                "_id": {
-                    "minute": {"$minute": "$timestamp"}
-                },
-                "avgCount": {"$avg": "$peopleCount"}
-            }},
-        {"$sort": {"_id.minute": 1}}
-        ]
-        result = list(self.collection.aggregate(pipeline))
+                }},
+                {"$match": {"timestamp": {"$gte": thirty_minutes_ago}}},
+                {"$group": {
+                    "_id": {
+                        "minute": {"$minute": "$timestamp"},
+                        "hour": {"$hour": "$timestamp"}
+                    },
+                    "avgCount": {"$avg": "$peopleCount"}
+                }},
+                {"$sort": {"_id.minute": 1}}
+            ]
 
-        # Fill in missing minutes with zero count
-        all_minutes = set(range(30))
-        result_minutes = set(item['_id']['minute'] for item in result)
-        missing_minutes = all_minutes - result_minutes
-        
-        for minute in missing_minutes:
-            result.append({"_id": {"minute": minute}, "avgCount": 0})
-        
-        result = sorted(result, key=lambda x: x['_id']['minute'])
+            result = list(self.collection.aggregate(pipeline))
 
-         # Calculate moving average
-        moving_average = self.calculateMovingAverage(result)
-        
-        # Detect anomalies
-        anomalies = self.detectAnomalies(result, moving_average)
-        
-        return result, moving_average, anomalies
+            if not result:
+                return {"data": [], "movingAverage": [], "anomalies": []}
+
+            all_minutes = set(range(30))
+            result_minutes = set(item['_id']['minute'] for item in result)
+            missing_minutes = all_minutes - result_minutes
+
+            for minute in missing_minutes:
+                result.append({"_id": {"minute": minute, "hour": result[0]['_id']['hour']}, "avgCount": 0})
+
+            result = sorted(result, key=lambda x: x['_id']['minute'])
+
+            moving_average = self.calculateMovingAverage(result)
+            anomalies = self.detectAnomalies(result, moving_average)
+
+            formatted_result = [{"time": f"{item['_id']['hour']:02d}:{item['_id']['minute']:02d}", "count": item["avgCount"]} for item in result]
+
+            return {"data": formatted_result, "movingAverage": moving_average, "anomalies": anomalies}
+        except Exception as e:
+            print(f"Error fetching last 30 minutes data: {e}")
+            return {"error": "Failed to get last 30 minutes data"}
 
     def calculateMovingAverage(self, data, window=5):
         counts = [item['avgCount'] for item in data]
-        return [sum(counts[max(0, i-window+1):i+1]) / min(i+1, window) for i in range(len(counts))]
+        return [sum(counts[max(0, i - window + 1):i + 1]) / min(i + 1, window) for i in range(len(counts))]
 
     def detectAnomalies(self, data, moving_average, threshold=2):
         anomalies = []
@@ -149,20 +164,24 @@ class Database:
             if abs(item['avgCount'] - avg) > threshold * std_dev:
                 anomalies.append((item['_id']['minute'], item['avgCount']))
         return anomalies
-    
+
     def calculateOccupancyRate(self, current_count, max_capacity=100):
         return min(current_count / max_capacity * 100, 100)
 
     def getLiveOccupancyData(self):
-        latest_record = self.collection.find_one(sort=[("timestamp", -1)])
-        if latest_record:
-            current_count = latest_record['peopleCount']
-            occupancy_rate = self.calculateOccupancyRate(current_count)
-            return {
-                "currentCount": current_count,
-                "occupancyRate": round(occupancy_rate, 2)
-            }
-        return None
+        try:
+            latest_record = self.collection.find_one(sort=[("timestamp", -1)])
+            if latest_record:
+                current_count = latest_record['peopleCount']
+                occupancy_rate = self.calculateOccupancyRate(current_count)
+                return {
+                    "currentCount": current_count,
+                    "occupancyRate": round(occupancy_rate, 2)
+                }
+            return None
+        except Exception as e:
+            print(f"Error fetching live occupancy data: {e}")
+            return None
 
     def close(self):
         self.client.close()

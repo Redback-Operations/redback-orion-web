@@ -12,8 +12,8 @@ def floorReplica(canvasHeight, canvasWidth, tilesX, tilesY, rtspUrl):
         cap = cv2.VideoCapture(rtspUrl)
         success, frame = cap.read()
         if not success:
-            raise Exception("Failed to read video stream - floorReplica.py")
-    
+            raise Exception(f"Failed to read video stream from {rtspUrl} - floorReplica.py")
+
     tileHeight = canvasHeight // tilesY
     tileWidth = canvasWidth // tilesX
 
