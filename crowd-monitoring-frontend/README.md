@@ -44,3 +44,9 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+![Data Visualization Frontend](image.png)
+In the image, the backend isn't currently running which is why there is no live video feed or data.
+
+Run both the Frontend and Backend, and the website will look how it should
